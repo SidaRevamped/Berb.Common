@@ -20,15 +20,9 @@ namespace LeagueSharp.SDK
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using LeagueSharp.SDK;
-    using EloBuddy.SDK.Events;
-    using EloBuddy.SDK.Menu.Values;
-    using EloBuddy.SDK.Menu;
-    using EloBuddy.SDK;
-    using EloBuddy;
-    using Polygons;
-    using LeagueSharp.SDK.Core.Utils;
 
+    using LeagueSharp.SDK.Core.Utils;
+    using EloBuddy;
     /// <summary>
     ///     A static (stack) class which contains a sort-of cached versions of the important game objects.
     /// </summary>
@@ -444,60 +438,60 @@ namespace LeagueSharp.SDK
             initialized = true;
 
             Events.OnLoad += (sender, args) =>
-                {
-                    Player = ObjectManager.Player;
+            {
+                Player = ObjectManager.Player;
 
-                    HeroesList.AddRange(ObjectManager.Get<AIHeroClient>());
-                    MinionsList.AddRange(
-                        ObjectManager.Get<Obj_AI_Minion>()
-                            .Where(
-                                o => o.Team != GameObjectTeam.Neutral && !o.GetMinionType().HasFlag(MinionTypes.Ward)));
-                    TurretsList.AddRange(ObjectManager.Get<Obj_AI_Turret>());
-                    InhibitorsList.AddRange(ObjectManager.Get<Obj_BarracksDampener>());
-                    JungleList.AddRange(
-                        ObjectManager.Get<Obj_AI_Minion>()
-                            .Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse"));
-                    WardsList.AddRange(
-                        ObjectManager.Get<Obj_AI_Minion>().Where(o => o.GetMinionType().HasFlag(MinionTypes.Ward)));
-                    ShopsList.AddRange(ObjectManager.Get<Obj_Shop>());
-                    SpawnPointsList.AddRange(ObjectManager.Get<Obj_SpawnPoint>());
-                    GameObjectsList.AddRange(ObjectManager.Get<GameObject>());
-                    NexusList.AddRange(ObjectManager.Get<Obj_HQ>());
-                    AttackableUnitsList.AddRange(ObjectManager.Get<AttackableUnit>());
-                    ParticleEmittersList.AddRange(ObjectManager.Get<Obj_GeneralParticleEmitter>());
+                HeroesList.AddRange(ObjectManager.Get<AIHeroClient>());
+                MinionsList.AddRange(
+                    ObjectManager.Get<Obj_AI_Minion>()
+                        .Where(
+                            o => o.Team != GameObjectTeam.Neutral && !o.GetMinionType().HasFlag(MinionTypes.Ward)));
+                TurretsList.AddRange(ObjectManager.Get<Obj_AI_Turret>());
+                InhibitorsList.AddRange(ObjectManager.Get<Obj_BarracksDampener>());
+                JungleList.AddRange(
+                    ObjectManager.Get<Obj_AI_Minion>()
+                        .Where(o => o.Team == GameObjectTeam.Neutral && o.Name != "WardCorpse"));
+                WardsList.AddRange(
+                    ObjectManager.Get<Obj_AI_Minion>().Where(o => o.GetMinionType().HasFlag(MinionTypes.Ward)));
+                ShopsList.AddRange(ObjectManager.Get<Obj_Shop>());
+                SpawnPointsList.AddRange(ObjectManager.Get<Obj_SpawnPoint>());
+                GameObjectsList.AddRange(ObjectManager.Get<GameObject>());
+                NexusList.AddRange(ObjectManager.Get<Obj_HQ>());
+                AttackableUnitsList.AddRange(ObjectManager.Get<AttackableUnit>());
+                ParticleEmittersList.AddRange(ObjectManager.Get<Obj_GeneralParticleEmitter>());
 
-                    EnemyHeroesList.AddRange(HeroesList.Where(o => o.IsEnemy));
-                    EnemyMinionsList.AddRange(MinionsList.Where(o => o.IsEnemy));
-                    EnemyTurretsList.AddRange(TurretsList.Where(o => o.IsEnemy));
-                    EnemyInhibitorsList.AddRange(InhibitorsList.Where(o => o.IsEnemy));
-                    EnemyList.AddRange(
-                        EnemyHeroesList.Cast<Obj_AI_Base>().Concat(EnemyMinionsList).Concat(EnemyTurretsList));
-                    EnemyNexus = NexusList.FirstOrDefault(n => n.IsEnemy);
+                EnemyHeroesList.AddRange(HeroesList.Where(o => o.IsEnemy));
+                EnemyMinionsList.AddRange(MinionsList.Where(o => o.IsEnemy));
+                EnemyTurretsList.AddRange(TurretsList.Where(o => o.IsEnemy));
+                EnemyInhibitorsList.AddRange(InhibitorsList.Where(o => o.IsEnemy));
+                EnemyList.AddRange(
+                    EnemyHeroesList.Cast<Obj_AI_Base>().Concat(EnemyMinionsList).Concat(EnemyTurretsList));
+                EnemyNexus = NexusList.FirstOrDefault(n => n.IsEnemy);
 
-                    AllyHeroesList.AddRange(HeroesList.Where(o => o.IsAlly));
-                    AllyMinionsList.AddRange(MinionsList.Where(o => o.IsAlly));
-                    AllyTurretsList.AddRange(TurretsList.Where(o => o.IsAlly));
-                    AllyInhibitorsList.AddRange(InhibitorsList.Where(o => o.IsAlly));
-                    AllyList.AddRange(
-                        AllyHeroesList.Cast<Obj_AI_Base>().Concat(AllyMinionsList).Concat(AllyTurretsList));
-                    AllyNexus = NexusList.FirstOrDefault(n => n.IsAlly);
+                AllyHeroesList.AddRange(HeroesList.Where(o => o.IsAlly));
+                AllyMinionsList.AddRange(MinionsList.Where(o => o.IsAlly));
+                AllyTurretsList.AddRange(TurretsList.Where(o => o.IsAlly));
+                AllyInhibitorsList.AddRange(InhibitorsList.Where(o => o.IsAlly));
+                AllyList.AddRange(
+                    AllyHeroesList.Cast<Obj_AI_Base>().Concat(AllyMinionsList).Concat(AllyTurretsList));
+                AllyNexus = NexusList.FirstOrDefault(n => n.IsAlly);
 
-                    JungleSmallList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Small));
-                    JungleLargeList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Large));
-                    JungleLegendaryList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Legendary));
+                JungleSmallList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Small));
+                JungleLargeList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Large));
+                JungleLegendaryList.AddRange(JungleList.Where(o => o.GetJungleType() == JungleType.Legendary));
 
-                    AllyWardsList.AddRange(WardsList.Where(o => o.IsAlly));
-                    EnemyWardsList.AddRange(WardsList.Where(o => o.IsEnemy));
+                AllyWardsList.AddRange(WardsList.Where(o => o.IsAlly));
+                EnemyWardsList.AddRange(WardsList.Where(o => o.IsEnemy));
 
-                    AllyShopsList.AddRange(ShopsList.Where(o => o.IsAlly));
-                    EnemyShopsList.AddRange(ShopsList.Where(o => o.IsEnemy));
+                AllyShopsList.AddRange(ShopsList.Where(o => o.IsAlly));
+                EnemyShopsList.AddRange(ShopsList.Where(o => o.IsEnemy));
 
-                    AllySpawnPointsList.AddRange(SpawnPointsList.Where(o => o.IsAlly));
-                    EnemySpawnPointsList.AddRange(SpawnPointsList.Where(o => o.IsEnemy));
+                AllySpawnPointsList.AddRange(SpawnPointsList.Where(o => o.IsAlly));
+                EnemySpawnPointsList.AddRange(SpawnPointsList.Where(o => o.IsEnemy));
 
-                    GameObject.OnCreate += OnCreate;
-                    GameObject.OnDelete += OnDelete;
-                };
+                GameObject.OnCreate += OnCreate;
+                GameObject.OnDelete += OnDelete;
+            };
         }
 
         /// <summary>
@@ -571,7 +565,6 @@ namespace LeagueSharp.SDK
                 }
                 else if (minion.Name != "WardCorpse")
                 {
-                    JungleList.Add(minion);
                     switch (minion.GetJungleType())
                     {
                         case JungleType.Small:
@@ -584,6 +577,8 @@ namespace LeagueSharp.SDK
                             JungleLegendaryList.Add(minion);
                             break;
                     }
+
+                    JungleList.Add(minion);
                 }
 
                 return;
@@ -614,6 +609,36 @@ namespace LeagueSharp.SDK
                 return;
             }
 
+            var shop = sender as Obj_Shop;
+            if (shop != null)
+            {
+                ShopsList.Add(shop);
+                if (shop.IsAlly)
+                {
+                    AllyShopsList.Add(shop);
+                }
+                else
+                {
+                    EnemyShopsList.Add(shop);
+                }
+
+                return;
+            }
+
+            var spawnPoint = sender as Obj_SpawnPoint;
+            if (spawnPoint != null)
+            {
+                SpawnPointsList.Add(spawnPoint);
+                if (spawnPoint.IsAlly)
+                {
+                    AllySpawnPointsList.Add(spawnPoint);
+                }
+                else
+                {
+                    EnemySpawnPointsList.Add(spawnPoint);
+                }
+            }
+
             var inhibitor = sender as Obj_BarracksDampener;
             if (inhibitor != null)
             {
@@ -625,6 +650,20 @@ namespace LeagueSharp.SDK
                 else
                 {
                     EnemyInhibitorsList.Add(inhibitor);
+                }
+            }
+
+            var nexus = sender as Obj_HQ;
+            if (nexus != null)
+            {
+                NexusList.Add(nexus);
+                if (nexus.IsAlly)
+                {
+                    AllyNexus = nexus;
+                }
+                else
+                {
+                    EnemyNexus = nexus;
                 }
             }
         }
@@ -645,13 +684,9 @@ namespace LeagueSharp.SDK
                 GameObjectsList.Remove(gameObject);
             }
 
-            var attackableUnit = sender as AttackableUnit;
-            if (attackableUnit != null)
+            foreach (var attackableUnitObject in AttackableUnitsList.Where(a => a.Compare(sender)).ToList())
             {
-                foreach (var attackableUnitObject in AttackableUnitsList.Where(a => a.Compare(attackableUnit)).ToList())
-                {
-                    AttackableUnitsList.Remove(attackableUnitObject);
-                }
+                AttackableUnitsList.Remove(attackableUnitObject);
             }
 
             var hero = sender as AIHeroClient;
@@ -682,16 +717,16 @@ namespace LeagueSharp.SDK
                 {
                     if (minion.GetMinionType().HasFlag(MinionTypes.Ward))
                     {
-                        foreach (var wardObject in WardsList.Where(w => w.Compare(minion)).ToList())
+                        foreach (var ward in WardsList.Where(w => w.Compare(minion)).ToList())
                         {
-                            WardsList.Remove(wardObject);
+                            WardsList.Remove(ward);
                             if (minion.IsEnemy)
                             {
-                                EnemyWardsList.Remove(wardObject);
+                                EnemyWardsList.Remove(ward);
                             }
                             else
                             {
-                                AllyWardsList.Remove(wardObject);
+                                AllyWardsList.Remove(ward);
                             }
                         }
                     }
@@ -717,7 +752,6 @@ namespace LeagueSharp.SDK
                 {
                     foreach (var jungleObject in JungleList.Where(j => j.Compare(minion)).ToList())
                     {
-                        JungleList.Remove(jungleObject);
                         switch (jungleObject.GetJungleType())
                         {
                             case JungleType.Small:
@@ -730,6 +764,8 @@ namespace LeagueSharp.SDK
                                 JungleLegendaryList.Remove(jungleObject);
                                 break;
                         }
+
+                        JungleList.Remove(jungleObject);
                     }
                 }
 
@@ -739,11 +775,7 @@ namespace LeagueSharp.SDK
             var particle = sender as Obj_GeneralParticleEmitter;
             if (particle != null)
             {
-                foreach (var particleObject in ParticleEmittersList.Where(a => a.Compare(particle)).ToList())
-                {
-                    ParticleEmittersList.Remove(particleObject);
-                }
-
+                ParticleEmittersList.Remove(particle);
                 return;
             }
 
@@ -768,6 +800,42 @@ namespace LeagueSharp.SDK
                 return;
             }
 
+            var shop = sender as Obj_Shop;
+            if (shop != null)
+            {
+                foreach (var shopObject in ShopsList.Where(s => s.Compare(shop)).ToList())
+                {
+                    ShopsList.Remove(shopObject);
+                    if (shop.IsAlly)
+                    {
+                        AllyShopsList.Remove(shopObject);
+                    }
+                    else
+                    {
+                        EnemyShopsList.Remove(shopObject);
+                    }
+                }
+
+                return;
+            }
+
+            var spawnPoint = sender as Obj_SpawnPoint;
+            if (spawnPoint != null)
+            {
+                foreach (var spawnPointObject in SpawnPointsList.Where(s => s.Compare(spawnPoint)).ToList())
+                {
+                    SpawnPointsList.Remove(spawnPointObject);
+                    if (spawnPoint.IsAlly)
+                    {
+                        AllySpawnPointsList.Remove(spawnPointObject);
+                    }
+                    else
+                    {
+                        EnemySpawnPointsList.Remove(spawnPointObject);
+                    }
+                }
+            }
+
             var inhibitor = sender as Obj_BarracksDampener;
             if (inhibitor != null)
             {
@@ -781,6 +849,23 @@ namespace LeagueSharp.SDK
                     else
                     {
                         EnemyInhibitorsList.Remove(inhibitorObject);
+                    }
+                }
+            }
+
+            var nexus = sender as Obj_HQ;
+            if (nexus != null)
+            {
+                foreach (var nexusObject in NexusList.Where(n => n.Compare(nexus)).ToList())
+                {
+                    NexusList.Remove(nexusObject);
+                    if (nexusObject.IsAlly)
+                    {
+                        AllyNexus = null;
+                    }
+                    else
+                    {
+                        EnemyNexus = null;
                     }
                 }
             }
