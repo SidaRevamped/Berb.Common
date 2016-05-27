@@ -21,15 +21,13 @@ namespace LeagueSharp.SDK
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using EloBuddy.SDK.Enumerations;
-    using EloBuddy.SDK.Events;
-    using EloBuddy.SDK.Menu.Values;
-    using EloBuddy.SDK.Menu;
-    using EloBuddy.SDK;
-    using EloBuddy;
-    using LeagueSharp.SDK.Core.Utils;
-    using SharpDX;
 
+    using LeagueSharp.Data;
+    using LeagueSharp.Data.DataTypes;
+    using LeagueSharp.Data.Enumerations;
+
+    using SharpDX;
+    using EloBuddy;
     /// <summary>
     ///     Detection of Gap-closers and fires the OnGapCloser event.
     /// </summary>
@@ -45,7 +43,8 @@ namespace LeagueSharp.SDK
         /// <summary>
         ///     Gets the spells.
         /// </summary>
-        private static readonly Dictionary<string, GapCloser> SpellsList = new Dictionary<string, GapCloser>();
+        private static readonly IReadOnlyDictionary<string, GapcloserDataEntry> SpellsList =
+            Data.Get<GapcloserData>().SpellsList;
 
         #endregion
 
@@ -68,7 +67,7 @@ namespace LeagueSharp.SDK
         /// <summary>
         ///     Gets the spells.
         /// </summary>
-        public static IEnumerable<GapCloser> GapCloserSpells => SpellsList.Values;
+        public static IEnumerable<GapcloserDataEntry> GapCloserSpells => SpellsList.Values;
 
         #endregion
 
@@ -88,7 +87,7 @@ namespace LeagueSharp.SDK
 
             var hero = sender as AIHeroClient;
 
-            if (hero == null)
+            if (hero == null || hero.IsAlly)
             {
                 return;
             }
@@ -98,6 +97,7 @@ namespace LeagueSharp.SDK
                 {
                     Start = args.Start,
                     End = args.End,
+                    Target = args.Target,
                     Sender = hero,
                     TickCount = Variables.TickCount,
                     SkillType =
@@ -106,9 +106,11 @@ namespace LeagueSharp.SDK
                                 : GapcloserType.Skillshot,
                     Slot = args.Slot,
                     IsDirectedToPlayer =
-                            (args.Target != null && args.Target.IsValid && args.Target.IsMe)
-                            || args.End.DistanceToPlayer() < args.Start.DistanceToPlayer()
-                            || hero.IsFacing(GameObjects.Player),
+                            (hero.Distance(ObjectManager.Player) < 1500
+                             || args.End.Distance(ObjectManager.Player.Position) < 800)
+                            && ((args.Target != null && args.Target.IsValid && args.Target.IsMe)
+                                || args.End.DistanceToPlayer() < args.Start.DistanceToPlayer()
+                                || hero.LSIsFacing(GameObjects.Player)),
                     SpellName = args.SData.Name
                 });
         }
@@ -119,13 +121,14 @@ namespace LeagueSharp.SDK
         private static void EventGapcloser()
         {
             ActiveSpellsList.RemoveAll(entry => Variables.TickCount > entry.TickCount + 900);
+
             if (OnGapCloser == null)
             {
                 return;
             }
 
             foreach (var gapcloser in
-                ActiveSpellsList.Where(gapcloser => gapcloser.Sender.IsValidTarget())
+                ActiveSpellsList.Where(gapcloser => gapcloser.Sender.LSIsValidTarget())
                     .Where(
                         gapcloser =>
                         gapcloser.SkillType == GapcloserType.Targeted
@@ -141,37 +144,12 @@ namespace LeagueSharp.SDK
         /// <summary>
         ///     GapCloser Data Container
         /// </summary>
-        public struct GapCloser
-        {
-            #region Fields
-
-            /// <summary>
-            ///     Spell Type
-            /// </summary>
-            public GapcloserType SkillType { get; set; }
-
-            /// <summary>
-            ///     Spell Slot
-            /// </summary>
-            public SpellSlot Slot { get; set; }
-
-            /// <summary>
-            ///     Spell Name
-            /// </summary>
-            public string SpellName { get; set; }
-
-            #endregion
-        }
-
-        /// <summary>
-        ///     GapCloser Data Container
-        /// </summary>
         public class GapCloserEventArgs : EventArgs
         {
             #region Public Properties
 
             /// <summary>
-            ///     Gets or sets the end.
+            ///     Gets or sets the position at which the enemy will be upon spell completion.
             /// </summary>
             public Vector3 End { get; set; }
 
@@ -204,6 +182,10 @@ namespace LeagueSharp.SDK
             ///     Gets or sets the start.
             /// </summary>
             public Vector3 Start { get; set; }
+
+            /// <summary>
+            ///     Gets or sets the target of the gapcloser spell. It can be null!
+            public GameObject Target { get; set; }
 
             /// <summary>
             ///     Gets or sets the tick count.
