@@ -127,5 +127,16 @@ namespace LeagueSharp.Common
                 ObjectManager.Player
                     .ServerPosition.To2D()) <= myRange * myRange;
         }
+
+        /// <summary>
+        ///     Returns the auto-attack range of the target.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <returns>System.Single.</returns>
+        public static float GetAttackRange(AIHeroClient target)
+        {
+            var result = target.AttackRange + target.BoundingRadius;
+            return result;
+        }
     }
 }
