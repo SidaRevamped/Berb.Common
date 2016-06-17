@@ -25,7 +25,6 @@
         /// <summary>
         ///     Initializes the <see cref="Data" /> class.
         /// </summary>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         static Data()
         {
             try
@@ -64,7 +63,6 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         public static T Get<T>() where T : DataType
         {
             try
