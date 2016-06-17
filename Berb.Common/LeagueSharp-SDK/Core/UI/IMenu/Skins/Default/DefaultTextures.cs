@@ -26,7 +26,7 @@ using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK;
 using EloBuddy;
-    using PortAIO.Properties;
+    using BerbCommon.Properties;
 
     using SharpDX.Direct3D9;
 

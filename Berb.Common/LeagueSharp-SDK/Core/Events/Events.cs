@@ -17,12 +17,14 @@
 
 namespace LeagueSharp.SDK
 {
-    using EloBuddy;
     using System;
+    using EloBuddy;
+    using LeagueSharp.SDK.Core.Utils;
 
     /// <summary>
     ///     The provided events by the kit.
     /// </summary>
+    [ResourceImport]
     public static partial class Events
     {
         #region Constructors and Destructors
@@ -34,7 +36,7 @@ namespace LeagueSharp.SDK
         {
             Game.OnUpdate += OnUpdate;
             Obj_AI_Base.OnProcessSpellCast += OnProcessSpellCast;
-            Obj_AI_Base.OnNewPath += OnNewPath;
+            //Obj_AI_Base.OnNewPath += OnNewPath;
             Spellbook.OnStopCast += OnStopCast;
             GameObject.OnCreate += OnCreate;
             GameObject.OnIntegerPropertyChange += OnIntegerPropertyChange;
@@ -86,7 +88,7 @@ namespace LeagueSharp.SDK
         /// </param>
         private static void OnNewPath(Obj_AI_Base sender, GameObjectNewPathEventArgs args)
         {
-            EventDash(sender, args);
+            //EventDash(sender, args);
         }
 
         /// <summary>
@@ -116,7 +118,7 @@ namespace LeagueSharp.SDK
         /// </param>
         private static void OnStopCast(Obj_AI_Base sender, SpellbookStopCastEventArgs args)
         {
-            EventInterruptableSpell(sender.Spellbook);
+            EventInterruptableSpell(sender);
         }
 
         /// <summary>

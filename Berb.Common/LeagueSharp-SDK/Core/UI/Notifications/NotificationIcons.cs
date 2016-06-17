@@ -20,7 +20,7 @@ namespace LeagueSharp.SDK
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
-    using PortAIO.Properties;
+    using BerbCommon.Properties;
     using EloBuddy.SDK.Enumerations;
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
