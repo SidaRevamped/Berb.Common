@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace LeagueSharp.Common
+﻿namespace LeagueSharp.Common
 {
+    using System;
+
     /// <summary>
     ///     Windows Messages
     ///     Defined in <![CDATA[winuser.h]]> from Windows SDK v6.1
@@ -336,7 +336,8 @@ namespace LeagueSharp.Common
         /// <summary>
         ///     WM_COMMNOTIFY is Obsolete for Win32-Based Applications
         /// </summary>
-        [Obsolete] WM_COMMNOTIFY = 0x0044,
+        [Obsolete]
+        WM_COMMNOTIFY = 0x0044,
 
         /// <summary>
         ///     The WM_WINDOWPOSCHANGING message is sent to a window whose size, position, or place in the Z order is about to
@@ -355,7 +356,8 @@ namespace LeagueSharp.Common
         ///     mode.
         ///     Use: POWERBROADCAST
         /// </summary>
-        [Obsolete] WM_POWER = 0x0048,
+        [Obsolete]
+        WM_POWER = 0x0048,
 
         /// <summary>
         ///     An application sends the WM_COPYDATA message to pass data to another application.

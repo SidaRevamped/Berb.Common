@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace LeagueSharp.Common
 {
@@ -99,6 +100,7 @@ namespace LeagueSharp.Common
         ///     The state.
         /// </returns>
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
+        [SecuritySafeCritical]
         internal static extern short GetKeyState(int virtualKeyCode);
     }
 }

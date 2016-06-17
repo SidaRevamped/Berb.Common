@@ -1,10 +1,9 @@
-﻿using System;
-using System.Security;
-using System.Security.Permissions;
-using EloBuddy;
-
-namespace LeagueSharp.Common
+﻿namespace LeagueSharp.Common
 {
+    using EloBuddy;
+    using System;
+    using System.Security.Permissions;
+
     /// <summary>
     ///     The windows event message composition, gives indepth information from a <see cref="WndEventArgs" />.
     /// </summary>
@@ -52,23 +51,19 @@ namespace LeagueSharp.Common
         /// <param name="wndEventArgs">
         ///     The <see cref="WndEventArgs" />
         /// </param>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
-        [SecuritySafeCritical]
         public WndEventComposition(WndEventArgs wndEventArgs)
         {
             this.wndEventArgs = wndEventArgs;
 
-            Char = Convert.ToChar(wndEventArgs.WParam <= char.MaxValue ? wndEventArgs.WParam : 0);
-            Key = (Keys) (int) wndEventArgs.WParam;
-            FullKey = (Keys) (int) wndEventArgs.WParam != ModifierKeys
-                ? (Keys) (int) wndEventArgs.WParam | ModifierKeys
-                : (Keys) (int) wndEventArgs.WParam;
-            Msg = (WindowsMessages) wndEventArgs.Msg;
+            this.Char = Convert.ToChar((wndEventArgs.WParam <= char.MaxValue) ? wndEventArgs.WParam : 0);
+            this.Key = (Keys)((int)wndEventArgs.WParam);
+            this.FullKey = (Keys)((int)wndEventArgs.WParam);
+            this.Msg = (WindowsMessages)wndEventArgs.Msg;
 
             var bytes = BitConverter.GetBytes(wndEventArgs.WParam);
-            SideButton = bytes.Length > 2
-                ? bytes[2] == 1 ? Keys.XButton1 : bytes[2] == 2 ? Keys.XButton2 : Keys.None
-                : Keys.None;
+            this.SideButton = (bytes.Length > 2)
+                                  ? bytes[2] == 1 ? Keys.XButton1 : bytes[2] == 2 ? Keys.XButton2 : Keys.None
+                                  : Keys.None;
         }
 
         #endregion
@@ -108,7 +103,10 @@ namespace LeagueSharp.Common
         /// </summary>
         public int LParam
         {
-            get { return wndEventArgs.LParam; }
+            get
+            {
+                return this.wndEventArgs.LParam;
+            }
         }
 
         /// <summary>
@@ -116,9 +114,15 @@ namespace LeagueSharp.Common
         /// </summary>
         public bool Process
         {
-            get { return wndEventArgs.Process; }
+            get
+            {
+                return this.wndEventArgs.Process;
+            }
 
-            set { wndEventArgs.Process = value; }
+            set
+            {
+                this.wndEventArgs.Process = value;
+            }
         }
 
         /// <summary>
@@ -126,7 +130,10 @@ namespace LeagueSharp.Common
         /// </summary>
         public uint WParam
         {
-            get { return wndEventArgs.WParam; }
+            get
+            {
+                return this.wndEventArgs.WParam;
+            }
         }
 
         #endregion
