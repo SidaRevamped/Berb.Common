@@ -32,7 +32,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Skins.Light2
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
     using EloBuddy;
-    using BerbCommon.Properties;
+    using PortAIO.Properties;
     using SharpDX.Direct3D9;
 
     internal enum LightTexture2

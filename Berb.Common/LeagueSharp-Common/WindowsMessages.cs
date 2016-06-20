@@ -1,7 +1,7 @@
-﻿namespace LeagueSharp.Common
-{
-    using System;
+﻿using System;
 
+namespace LeagueSharp.Common
+{
     /// <summary>
     ///     Windows Messages
     ///     Defined in <![CDATA[winuser.h]]> from Windows SDK v6.1

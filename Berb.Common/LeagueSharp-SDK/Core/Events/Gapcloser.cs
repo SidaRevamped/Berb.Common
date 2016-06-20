@@ -174,8 +174,6 @@ namespace LeagueSharp.SDK
             ///     Gets or sets the end.
             /// </summary>
             public Vector3 End { get; set; }
-            public GameObject Target { get; set; }
-
 
             /// <summary>
             ///     Gets or sets a value indicating whether is directed to player.
@@ -186,6 +184,8 @@ namespace LeagueSharp.SDK
             ///     Gets or sets the sender.
             /// </summary>
             public AIHeroClient Sender { get; set; }
+
+            public GameObject Target { get; set; }
 
             /// <summary>
             ///     Gets or sets the skill type.

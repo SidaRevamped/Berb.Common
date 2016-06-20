@@ -458,7 +458,6 @@
     <Content Include="Resources\ScopeSprite.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\6.11.json" />
     <None Include="Resources\ChampionData.json" />
     <None Include="Resources\ChampionData\Aatrox.json" />
     <None Include="Resources\ChampionData\Ahri.json" />
@@ -590,7 +589,6 @@
     <None Include="Resources\ChampionData\Ziggs.json" />
     <None Include="Resources\ChampionData\Zilean.json" />
     <None Include="Resources\ChampionData\Zyra.json" />
-    <None Include="Resources\DamageData\6.11.json" />
     <None Include="Resources\DamageData\6.9.json" />
     <None Include="Resources\Data\6.6.json" />
     <None Include="Resources\Data\6.7.json" />

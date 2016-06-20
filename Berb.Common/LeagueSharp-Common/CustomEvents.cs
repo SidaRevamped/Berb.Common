@@ -22,54 +22,55 @@
 
 #region
 
-using EloBuddy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EloBuddy;
+using EloBuddy.SDK.Events;
 
 #endregion
 
 namespace LeagueSharp.Common
 {
     /// <summary>
-    /// Provides custom events.
+    ///     Provides custom events.
     /// </summary>
     public static class CustomEvents
     {
         /// <summary>
-        /// Provides custom events regarding the game.
+        ///     Provides custom events regarding the game.
         /// </summary>
         public class Game
         {
             /// <summary>
-            /// The delegate for <see cref="Game.OnGameEnd"/>
+            ///     The delegate for <see cref="Game.OnGameEnd" />
             /// </summary>
-            /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+            /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
             public delegate void OnGameEnded(EventArgs args);
 
             /// <summary>
-            /// The delegate for <see cref="Game.OnGameLoad"/>
+            ///     The delegate for <see cref="Game.OnGameLoad" />
             /// </summary>
-            /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+            /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
             public delegate void OnGameLoaded(EventArgs args);
 
             /// <summary>
-            /// The notified subscribers
+            ///     The notified subscribers
             /// </summary>
             private static readonly List<Delegate> NotifiedSubscribers = new List<Delegate>();
 
             /// <summary>
-            /// The nexus list
+            ///     The nexus list
             /// </summary>
             private static readonly List<Obj_HQ> NexusList = new List<Obj_HQ>();
 
             /// <summary>
-            /// The end game called
+            ///     The end game called
             /// </summary>
             private static bool _endGameCalled;
 
             /// <summary>
-            /// Initializes static members of the <see cref="Game"/> class. 
+            ///     Initializes static members of the <see cref="Game" /> class.
             /// </summary>
             static Game()
             {
@@ -77,11 +78,10 @@ namespace LeagueSharp.Common
             }
 
             /// <summary>
-            /// Initializes this instance.
+            ///     Initializes this instance.
             /// </summary>
             public static void Initialize()
             {
-
                 foreach (var hq in ObjectManager.Get<Obj_HQ>().Where(hq => hq.IsValid))
                 {
                     NexusList.Add(hq);
@@ -90,10 +90,7 @@ namespace LeagueSharp.Common
                 if (EloBuddy.Game.Mode == GameMode.Running)
                 {
                     //Otherwise the .ctor didn't return yet and no callback will occur
-                    Utility.DelayAction.Add(500, () =>
-                    {
-                        Game_OnGameStart(new EventArgs());
-                    });
+                    Utility.DelayAction.Add(500, () => { Game_OnGameStart(new EventArgs()); });
                 }
                 else
                 {
@@ -102,9 +99,9 @@ namespace LeagueSharp.Common
             }
 
             /// <summary>
-            /// Fired when the game updates.
+            ///     Fired when the game updates.
             /// </summary>
-            /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+            /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
             private static void Game_OnGameUpdate(EventArgs args)
             {
                 if (OnGameLoad != null)
@@ -144,20 +141,20 @@ namespace LeagueSharp.Common
 
 
             /// <summary>
-            /// Occurs when the game loads. This will be fired if the game is already loaded.
+            ///     Occurs when the game loads. This will be fired if the game is already loaded.
             /// </summary>
             public static event OnGameLoaded OnGameLoad;
 
 
             /// <summary>
-            /// Occurs when the game ends. This is meant as a better replacement to <see cref="LeagueSharp.Game.OnEnd"/>.
+            ///     Occurs when the game ends. This is meant as a better replacement to <see cref="LeagueSharp.Game.OnEnd" />.
             /// </summary>
             public static event OnGameEnded OnGameEnd;
 
             /// <summary>
-            /// Fired when the game is started.
+            ///     Fired when the game is started.
             /// </summary>
-            /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
+            /// <param name="args">The <see cref="EventArgs" /> instance containing the event data.</param>
             private static void Game_OnGameStart(EventArgs args)
             {
                 EloBuddy.Game.OnUpdate += Game_OnGameUpdate;
@@ -182,52 +179,30 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        /// Provides custom events regarding units.
+        ///     Provides custom events regarding units.
         /// </summary>
         public class Unit
         {
             /// <summary>
-            /// The delegate for <see cref="Unit.OnDash"/>
+            ///     The delegate for <see cref="Unit.OnDash" />
             /// </summary>
             /// <param name="sender">The sender.</param>
             /// <param name="args">The arguments.</param>
             public delegate void OnDashed(Obj_AI_Base sender, Dash.DashItem args);
 
             /// <summary>
-            /// The delegate for <see cref="Unit.OnLevelUp"/>
+            ///     The delegate for <see cref="Unit.OnLevelUp" />
             /// </summary>
             /// <param name="sender">The sender.</param>
-            /// <param name="args">The <see cref="OnLevelUpEventArgs"/> instance containing the event data.</param>
+            /// <param name="args">The <see cref="OnLevelUpEventArgs" /> instance containing the event data.</param>
             public delegate void OnLeveledUp(Obj_AI_Base sender, OnLevelUpEventArgs args);
 
             /// <summary>
-            /// The delegate for <see cref="Unit.OnLevelUpSpell"/>
+            ///     The delegate for <see cref="Unit.OnLevelUpSpell" />
             /// </summary>
             /// <param name="sender">The sender.</param>
-            /// <param name="args">The <see cref="OnLevelUpSpellEventArgs"/> instance containing the event data.</param>
+            /// <param name="args">The <see cref="OnLevelUpSpellEventArgs" /> instance containing the event data.</param>
             public delegate void OnLeveledUpSpell(Obj_AI_Base sender, OnLevelUpSpellEventArgs args);
-
-            /// <summary>
-            /// Initializes static members of the <see cref="Unit"/> class. 
-            /// </summary>
-            static Unit()
-            {
-                EloBuddy.Game.OnProcessPacket += PacketHandler;
-
-                //Initializes ondash class:
-                ObjectManager.Player.LSIsDashing();
-            }
-
-            /// <summary>
-            /// Occurs when the player levels up a spell.
-            /// </summary>
-            public static event OnLeveledUpSpell OnLevelUpSpell;
-
-            /// <summary>
-            /// Handles packets.
-            /// </summary>
-            /// <param name="args">The <see cref="GamePacketEventArgs"/> instance containing the event data.</param>
-            private static void PacketHandler(GamePacketEventArgs args) { }
 
             /// <summary>
             /// Occurs when a unit levels up.
@@ -235,12 +210,31 @@ namespace LeagueSharp.Common
             public static event OnLeveledUp OnLevelUp;
 
             /// <summary>
-            /// Occurs when a unit dashes.
+            ///     Initializes static members of the <see cref="Unit" /> class.
+            /// </summary>
+            static Unit()
+            {
+                EloBuddy.Game.OnProcessPacket += PacketHandler;
+
+                //Initializes ondash class:
+                ObjectManager.Player.IsDashing();
+            }
+
+            /// <summary>
+            ///     Handles packets.
+            /// </summary>
+            /// <param name="args">The <see cref="GamePacketEventArgs" /> instance containing the event data.</param>
+            private static void PacketHandler(GamePacketEventArgs args)
+            {
+            }
+
+            /// <summary>
+            ///     Occurs when a unit dashes.
             /// </summary>
             public static event OnDashed OnDash;
 
             /// <summary>
-            /// Triggers the on dash.
+            ///     Triggers the on dash.
             /// </summary>
             /// <param name="sender">The sender.</param>
             /// <param name="args">The arguments.</param>
@@ -254,45 +248,47 @@ namespace LeagueSharp.Common
             }
 
             /// <summary>
-            /// The event arguments for the <see cref="Unit.OnLevelUp"/> event.
+            ///     The event arguments for the <see cref="Unit.OnLevelUp" /> event.
             /// </summary>
             public class OnLevelUpEventArgs : EventArgs
             {
                 /// <summary>
-                /// The new level
+                ///     The new level
                 /// </summary>
                 public int NewLevel;
 
                 /// <summary>
-                /// The remaining points
+                ///     The remaining points
                 /// </summary>
                 public int RemainingPoints;
             }
 
             /// <summary>
-            /// The event arguments for the <see cref="Unit.OnLevelUpSpell"/> event.
+            ///     The event arguments for the <see cref="Unit.OnLevelUpSpell" /> event.
             /// </summary>
             public class OnLevelUpSpellEventArgs : EventArgs
             {
                 /// <summary>
-                /// The remainingpoints
+                ///     The remainingpoints
                 /// </summary>
                 public int Remainingpoints;
 
                 /// <summary>
-                /// The spell identifier
+                ///     The spell identifier
                 /// </summary>
                 public int SpellId;
 
                 /// <summary>
-                /// The spell level
+                ///     The spell level
                 /// </summary>
                 public int SpellLevel;
 
                 /// <summary>
-                /// Initializes a new instance of the <see cref="OnLevelUpSpellEventArgs"/> class.
+                ///     Initializes a new instance of the <see cref="OnLevelUpSpellEventArgs" /> class.
                 /// </summary>
-                internal OnLevelUpSpellEventArgs() { }
+                internal OnLevelUpSpellEventArgs()
+                {
+                }
             }
         }
     }

@@ -6,7 +6,7 @@
     using System.Text;
     using EloBuddy;
     using LeagueSharp.Data.Enumerations;
-    using BerbCommon.Properties;
+    using PortAIO.Properties;
     using LeagueSharp.Data.Utility.Resources;
 
     using Newtonsoft.Json;
@@ -26,7 +26,7 @@
         /// </summary>
         internal static readonly IDictionary<string, byte[]> DamageFiles = new Dictionary<string, byte[]>
         {
-            {"6.11", Resources._6_11}
+            {"6.8", Resources._6_8}
         };
 
         #endregion
