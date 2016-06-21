@@ -26,14 +26,14 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Values
     using Skins;
     using MenuItem = MenuItem;
     using EloBuddy.SDK.Enumerations;
-using EloBuddy.SDK.Events;
-using EloBuddy.SDK.Menu.Values;
-using EloBuddy.SDK.Menu;
-using EloBuddy.SDK;
-using EloBuddy;
-    /// <summary>
-    ///     Menu KeyBind.
-    /// </summary>
+    using EloBuddy.SDK.Events;
+    using EloBuddy.SDK.Menu.Values;
+    using EloBuddy.SDK.Menu;
+    using EloBuddy.SDK;
+    using EloBuddy; using Enumerations;
+    using Enumerations;    /// <summary>
+                           ///     Menu KeyBind.
+                           /// </summary>
     [Serializable]
     public class MenuKeyBind : MenuItem, ISerializable
     {

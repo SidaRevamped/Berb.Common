@@ -6,16 +6,18 @@
     using System.Runtime.Remoting.Messaging;
     using System.Security.Permissions;
     using EloBuddy.SDK.Enumerations;
-using EloBuddy.SDK.Events;
-using EloBuddy.SDK.Menu.Values;
-using EloBuddy.SDK.Menu;
-using EloBuddy.SDK;
-using EloBuddy;
+    using EloBuddy.SDK.Events;
+    using EloBuddy.SDK.Menu.Values;
+    using EloBuddy.SDK.Menu;
+    using EloBuddy.SDK;
+    using EloBuddy;
+    using Enumerations;
     using LeagueSharp.SDK.Core.Utils;
     using LeagueSharp.SDK.Core.Wrappers.Spells.SpellTypes;
 
     using SharpDX;
-
+    using Data.DataTypes;
+    using Data.Enumerations;
     public class Detector
     {
         #region Constructors and Destructors
@@ -165,7 +167,7 @@ using EloBuddy;
                 }
                 catch (Exception ex)
                 {
-                    Logging.Write()(LogLevel.Warn, "Wrong SpellType for Skillshot {0}, a Missile Type was expected", skillshot.SData.SpellName);
+                    Logging.Write()(Enumerations.LogLevel.Warn, "Wrong SpellType for Skillshot {0}, a Missile Type was expected", skillshot.SData.SpellName);
                 }
                 
             }

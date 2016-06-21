@@ -21,9 +21,9 @@ namespace LeagueSharp.SDK.Core.Utils
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Caching;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
-
+    using Enumerations;
     /// <summary>
     ///     Provides an implementation of ObjectCache, for any object. Check <see cref="DefaultCacheCapabilities" /> for
     ///     implemented abilities.

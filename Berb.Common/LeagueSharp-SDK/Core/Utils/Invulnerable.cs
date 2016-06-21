@@ -21,7 +21,7 @@ namespace LeagueSharp.SDK.Core.Utils
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
 
     /// <summary>

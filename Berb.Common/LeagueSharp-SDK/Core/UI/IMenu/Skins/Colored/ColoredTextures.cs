@@ -30,7 +30,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Skins.Colored
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using PortAIO.Properties;
     using SharpDX.Direct3D9;
 

@@ -81,6 +81,7 @@
     <Compile Include="LeagueSharp-Common\CustomEvents.cs" />
     <Compile Include="LeagueSharp-Common\Damage.cs" />
     <Compile Include="LeagueSharp-Common\Dash.cs" />
+    <Compile Include="LeagueSharp-Common\Data\SpellDatabase.cs" />
     <Compile Include="LeagueSharp-Common\EnumerableExtensions.cs" />
     <Compile Include="LeagueSharp-Common\GamePacket.cs" />
     <Compile Include="LeagueSharp-Common\Geometry.cs" />
@@ -138,12 +139,8 @@
     <Compile Include="LeagueSharp-SDK\Core\Bootstrap.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Constants.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\CastStates.cs" />
-    <Compile Include="LeagueSharp-SDK\Core\Enumerations\CastTypes.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\CenteredFlags.cs" />
-    <Compile Include="LeagueSharp-SDK\Core\Enumerations\CollisionableObjects.cs" />
-    <Compile Include="LeagueSharp-SDK\Core\Enumerations\DangerLevel.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\DrawType.cs" />
-    <Compile Include="LeagueSharp-SDK\Core\Enumerations\GapcloserType.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\HealthPredictionType.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\HitChance.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\JungleType.cs" />
@@ -156,8 +153,6 @@
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\PerformanceType.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\SkillshotDetectionType.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\SkillshotType.cs" />
-    <Compile Include="LeagueSharp-SDK\Core\Enumerations\SpellTags.cs" />
-    <Compile Include="LeagueSharp-SDK\Core\Enumerations\SpellType.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\TeleportStatus.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\TeleportType.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Enumerations\TurretType.cs" />
@@ -345,7 +340,6 @@
     <Compile Include="LeagueSharp-SDK\Core\Wrappers\Orbwalking\OrbwalkerBase.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Wrappers\Orbwalking\OrbwalkerSelector.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Wrappers\Spells\Database\SpellDatabase.cs" />
-    <Compile Include="LeagueSharp-SDK\Core\Wrappers\Spells\Database\SpellDatabaseEntry.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Wrappers\Spells\LastCast.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Wrappers\Spells\LastCastedSpellEntry.cs" />
     <Compile Include="LeagueSharp-SDK\Core\Wrappers\Spells\LastCastPacketSentEntry.cs" />

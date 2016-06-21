@@ -19,7 +19,7 @@ namespace LeagueSharp.SDK.Core.Utils
 {
     using System.Linq;
     using System.Text.RegularExpressions;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
 
     /// <summary>

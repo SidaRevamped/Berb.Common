@@ -24,7 +24,7 @@ namespace LeagueSharp.SDK.Core.Utils
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
 
     /// <summary>

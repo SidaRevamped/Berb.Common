@@ -20,7 +20,7 @@ namespace LeagueSharp.SDK.Core.Utils
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK.Clipper;
     using LeagueSharp.SDK;
     using LeagueSharp.SDK.Polygons;

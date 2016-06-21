@@ -26,7 +26,7 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using SharpDX.Direct3D9;
 
     /// <summary>

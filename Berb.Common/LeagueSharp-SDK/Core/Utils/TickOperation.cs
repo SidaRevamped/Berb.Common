@@ -18,7 +18,7 @@
 namespace LeagueSharp.SDK.Core.Utils
 {
     using System;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Executes an operation each set amount of ticks.
     /// </summary>

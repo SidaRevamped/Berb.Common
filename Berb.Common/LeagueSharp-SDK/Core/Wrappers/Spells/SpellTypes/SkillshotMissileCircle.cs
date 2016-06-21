@@ -12,8 +12,10 @@
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
     using EloBuddy;
+    using Enumerations;
     using SharpDX;
     using Polygons;
+    using Data.DataTypes;
     public class SkillshotMissileCircle : SkillshotMissile
     {
         #region Constructors and Destructors

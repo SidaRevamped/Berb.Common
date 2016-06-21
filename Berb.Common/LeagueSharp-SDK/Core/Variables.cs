@@ -22,7 +22,7 @@ namespace LeagueSharp.SDK
 using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK;
-using EloBuddy;
+using EloBuddy; using Enumerations;
 
     /// <summary>
     ///     Variables of the LeagueSharp development kit.

@@ -17,6 +17,7 @@
 
 namespace LeagueSharp.SDK
 {
+    using Enumerations;
     using SharpDX;
     using SharpDX.Direct3D9;
 

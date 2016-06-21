@@ -21,10 +21,10 @@ namespace LeagueSharp.SDK
     using System.Linq;
 
     using SharpDX;
-    using EloBuddy;
-    /// <summary>
-    ///     Provides helpful extensions to Units.
-    /// </summary>
+    using EloBuddy; using Enumerations;
+    using Enumerations;    /// <summary>
+                           ///     Provides helpful extensions to Units.
+                           /// </summary>
     public static partial class Extensions
     {
         #region Static Fields

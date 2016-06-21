@@ -20,7 +20,7 @@ namespace LeagueSharp.SDK.Core.Utils
     using System;
     using System.Collections.Generic;
     using System.Threading;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
     using Signals;
     /// <summary>

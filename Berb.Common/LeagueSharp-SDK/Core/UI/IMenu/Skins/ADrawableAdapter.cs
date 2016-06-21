@@ -24,7 +24,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Skins
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Provides an implementation of <see cref="ADrawable" /> that does nothing. This is used to prevent exceptions when
     ///     no <see cref="ADrawable" /> exists for a given <see cref="AMenuComponent" />.

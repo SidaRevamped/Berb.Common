@@ -15,26 +15,16 @@
 //    along with this program.  If not, see http://www.gnu.org/licenses/
 // </copyright>
 
-namespace LeagueSharp.SDK
+namespace LeagueSharp.Common.Data
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using EloBuddy.SDK.Enumerations;
-    using EloBuddy.SDK.Events;
-    using EloBuddy.SDK.Menu.Values;
-    using EloBuddy.SDK.Menu;
-    using EloBuddy.SDK;
-    using EloBuddy; using Enumerations;
+
+    using LeagueSharp.Data;
+    using LeagueSharp.Data.DataTypes;
     using LeagueSharp.Data.Enumerations;
-    using LeagueSharp.SDK;
-    using LeagueSharp.SDK.Core.Utils;
-    using LeagueSharp.SDK.Enumerations;
-    using Data.DataTypes;
-    /// <summary>
-    ///     The spell database.
-    /// </summary>
-    [ResourceImport]
+    using EloBuddy;
     public static class SpellDatabase
     {
         #region Static Fields
@@ -42,9 +32,8 @@ namespace LeagueSharp.SDK
         /// <summary>
         ///     A list of all the entries in the SpellDatabase.
         /// </summary>
-        public static IReadOnlyList<SpellDatabaseEntry> Spells => SpellsList;
-
-        private static List<SpellDatabaseEntry> SpellsList = new List<SpellDatabaseEntry>();
+        public static IReadOnlyList<SpellDatabaseEntry> Spells =
+            Data.Get<LeagueSharp.Data.DataTypes.SpellDatabase>().Spells;
 
         #endregion
 
@@ -97,12 +86,27 @@ namespace LeagueSharp.SDK
                     spellData.SpellName.ToLower() == spellName || spellData.ExtraSpellNames.Contains(spellName));
         }
 
+        /// <summary>
+        ///     Queries a search through the spell collection by object name.
+        /// </summary>
+        /// <param name="objectName">The object name.</param>
+        /// <returns>
+        ///     The <see cref="SpellDatabaseEntry" />
+        /// </returns>
         public static SpellDatabaseEntry GetBySourceObjectName(string objectName)
         {
             objectName = objectName.ToLowerInvariant();
-            return Spells.Where(spellData => spellData.SourceObjectName.Length != 0).FirstOrDefault(spellData => objectName.Contains(spellData.SourceObjectName));
+            return
+                Spells.Where(spellData => spellData.SourceObjectName.Length != 0)
+                    .FirstOrDefault(spellData => objectName.Contains(spellData.SourceObjectName));
         }
 
+        /// <summary>
+        ///     Get the first spell on a spellslot (for champions with more than 1 spellslot use method GetAllSpellsOnSpellSlot)
+        /// </summary>
+        /// <param name="slot">The SpellSlot</param>
+        /// <param name="championName">The Champion Name</param>
+        /// <returns></returns>
         public static SpellDatabaseEntry GetBySpellSlot(SpellSlot slot, string championName = "undefined")
         {
             var actualChampionName = championName.Equals("undefined")
@@ -113,6 +117,12 @@ namespace LeagueSharp.SDK
                     spellData => spellData.ChampionName == actualChampionName && spellData.Slot == slot);
         }
 
+        /// <summary>
+        ///     Get all spells corresponding to a spellslot (useful for nidalee, jayce, elise, leesin)
+        /// </summary>
+        /// <param name="slot">The SpellSlot</param>
+        /// <param name="championName">The Champion Name</param>
+        /// <returns></returns>
         public static IEnumerable<SpellDatabaseEntry> GetAllSpellsOnSpellSlot(
             SpellSlot slot,
             string championName = "undefined")
@@ -123,6 +133,12 @@ namespace LeagueSharp.SDK
             return Spells.Where(spellData => spellData.ChampionName == actualChampionName && spellData.Slot == slot);
         }
 
+        /// <summary>
+        ///     Creates a spell from target spellslot
+        /// </summary>
+        /// <param name="slot">The SpellSlot</param>
+        /// <param name="championName">The Champion Name</param>
+        /// <returns></returns>
         public static Spell MakeSpell(this SpellSlot slot, string championName = "undefined")
         {
             var spellData = GetBySpellSlot(slot, championName);
@@ -182,30 +198,29 @@ namespace LeagueSharp.SDK
         {
             switch (spellType)
             {
-                case Data.Enumerations.SpellType.SkillshotArc:
+                case SpellType.SkillshotArc:
                     return SkillshotType.SkillshotCone;
-                case Data.Enumerations.SpellType.SkillshotCone:
+                case SpellType.SkillshotCone:
                     return SkillshotType.SkillshotCone;
-                case Data.Enumerations.SpellType.SkillshotCircle:
+                case SpellType.SkillshotCircle:
                     return SkillshotType.SkillshotCircle;
-                case Data.Enumerations.SpellType.SkillshotLine:
+                case SpellType.SkillshotLine:
                     return SkillshotType.SkillshotLine;
-                case Data.Enumerations.SpellType.SkillshotMissileArc:
+                case SpellType.SkillshotMissileArc:
                     return SkillshotType.SkillshotCone;
-                case Data.Enumerations.SpellType.Position:
+                case SpellType.Position:
                     return SkillshotType.SkillshotLine;
-                case Data.Enumerations.SpellType.SkillshotMissileCircle:
+                case SpellType.SkillshotMissileCircle:
                     return SkillshotType.SkillshotCircle;
-                case Data.Enumerations.SpellType.SkillshotMissileLine:
+                case SpellType.SkillshotMissileLine:
                     return SkillshotType.SkillshotLine;
-                case Data.Enumerations.SpellType.SkillshotMissileCone:
+                case SpellType.SkillshotMissileCone:
                     return SkillshotType.SkillshotCircle;
-                case Data.Enumerations.SpellType.SkillshotRing:
+                case SpellType.SkillshotRing:
                     return SkillshotType.SkillshotCircle;
             }
             return SkillshotType.SkillshotLine;
         }
-
         #endregion
     }
 }

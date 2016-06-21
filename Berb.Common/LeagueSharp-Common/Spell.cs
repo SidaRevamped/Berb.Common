@@ -28,6 +28,8 @@ using System.Linq;
 using EloBuddy;
 using EloBuddy.SDK;
 using SharpDX;
+using LeagueSharp.Data.Enumerations;
+using LeagueSharp.Common.Data;
 
 #endregion
 
@@ -134,6 +136,8 @@ namespace LeagueSharp.Common
         /// </summary>
         private float _width;
 
+        public Spell() { }
+
         /// <summary>
         ///     check if the spell is being channeled
         /// </summary>
@@ -155,6 +159,60 @@ namespace LeagueSharp.Common
             // Default values
             MinHitChance = HitChance.VeryHigh;
         }
+
+        /// <summary>
+        ///     Initializes a spell using SpellDb defined values
+        /// </summary>
+        /// <param name="slot">The SpellSlot</param>
+        /// <param name="useSpellDbValues">Doesn't matter if it's true or false, using this override will automatically use SpellDb Values.</param>
+        public Spell(SpellSlot slot, bool useSpellDbValues)
+        {
+            var spellData = SpellDatabase.GetBySpellSlot(slot, ObjectManager.Player.CharData.BaseSkinName);
+            // Charged Spell:
+            if (spellData.ChargedSpellName != "")
+            {
+                ChargedBuffName = spellData.ChargedBuffName;
+                ChargedMaxRange = spellData.ChargedMaxRange;
+                ChargedMinRange = spellData.ChargedMinRange;
+                ChargedSpellName = spellData.ChargedSpellName;
+                ChargeDuration = spellData.ChargeDuration;
+                Delay = spellData.Delay;
+                Range = spellData.Range;
+                Width = spellData.Radius > 0 && spellData.Radius < 30000
+                    ? spellData.Radius
+                    : ((spellData.Width > 0 && spellData.Width < 30000) ? spellData.Width : 30000);
+                Collision = (spellData.CollisionObjects != null
+                             &&
+                             spellData.CollisionObjects.Any(
+                                 obj => obj == LeagueSharp.Data.Enumerations.CollisionableObjects.Minions));
+                Speed = spellData.MissileSpeed;
+                IsChargedSpell = true;
+                Type = SpellDatabase.GetSkillshotTypeFromSpellType(spellData.SpellType);
+                return;
+            }
+            // Skillshot:
+            if (spellData.CastType.Any(type => type == CastType.Position || type == CastType.Direction))
+            {
+                Delay = spellData.Delay;
+                Range = spellData.Range;
+                Width = spellData.Radius > 0 && spellData.Radius < 30000
+                    ? spellData.Radius
+                    : ((spellData.Width > 0 && spellData.Width < 30000) ? spellData.Width : 30000);
+                Collision = (spellData.CollisionObjects != null
+                             &&
+                             spellData.CollisionObjects.Any(
+                                 obj => obj == LeagueSharp.Data.Enumerations.CollisionableObjects.Minions));
+                Speed = spellData.MissileSpeed;
+                IsSkillshot = true;
+                Type = SpellDatabase.GetSkillshotTypeFromSpellType(spellData.SpellType);
+                return;
+            }
+            // Targeted:
+            Range = spellData.Range;
+            Delay = spellData.Delay;
+            Speed = spellData.MissileSpeed;
+        }
+
 
         /// <summary>
         ///     Gets or sets the name of the charged buff.

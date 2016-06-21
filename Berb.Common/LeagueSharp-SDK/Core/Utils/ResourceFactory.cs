@@ -23,7 +23,7 @@ namespace LeagueSharp.SDK.Core.Utils
     using System.Reflection;
     using System.Security.Permissions;
     using System.Text;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     public static class ResourceFactory
     {
         #region Public Methods and Operators

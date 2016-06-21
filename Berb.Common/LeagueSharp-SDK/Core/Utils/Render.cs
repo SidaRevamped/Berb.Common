@@ -9,7 +9,7 @@
     using System.Threading;
 
     using LeagueSharp.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using SharpDX;
     using SharpDX.Direct3D9;
 

@@ -17,7 +17,7 @@
     /// </summary>
     /// <seealso cref="DataType" />
     [ResourceImport]
-    public class DamageDatabase : DataType
+    public class DamageDatabase : IDataType
     {
         #region Static Fields
 
@@ -34,21 +34,31 @@
         #region Constructors and Destructors
 
         /// <summary>
-        ///     Prevents a default instance of the <see cref="DamageDatabase" /> class from being created.
+        ///     Initializes this instance.
         /// </summary>
-        private DamageDatabase()
+        void IDataType.Initialize()
         {
-            var version = new System.Version("6.8");
+            var version = new System.Version("6.11");
             var versionString = $"{version.Major}.{version.Minor}";
 
             var fileBytes = DamageFiles.ContainsKey(versionString)
-                ? DamageFiles[versionString]
-                : DamageFiles.OrderByDescending(o => o.Key).FirstOrDefault().Value;
+                                ? DamageFiles[versionString]
+                                : DamageFiles.OrderByDescending(o => o.Key).FirstOrDefault().Value;
 
             if (fileBytes != null)
             {
                 CreateDamages(JObject.Parse(Encoding.Default.GetString(fileBytes)));
             }
+        }
+
+        /// <summary>
+        ///     Prevents a default instance of the <see cref="DamageDatabase" /> class from being created.
+        /// </summary>
+        /// <summary>
+        ///     Prevents a default instance of the <see cref="DamageDatabase" /> class from being created.
+        /// </summary>
+        private DamageDatabase()
+        {
         }
 
         #endregion

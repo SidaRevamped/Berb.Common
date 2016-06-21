@@ -18,7 +18,7 @@
 namespace LeagueSharp.SDK
 {
     using System;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK.Core.Utils;
 
     /// <summary>

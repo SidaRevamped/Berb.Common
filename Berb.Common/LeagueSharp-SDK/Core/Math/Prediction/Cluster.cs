@@ -21,7 +21,7 @@ namespace LeagueSharp.SDK
     using System.Linq;
 
     using SharpDX;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Cluster (Area of Effect) Prediction class.
     /// </summary>

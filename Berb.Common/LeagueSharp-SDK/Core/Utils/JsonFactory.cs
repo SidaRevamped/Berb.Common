@@ -21,7 +21,7 @@ namespace LeagueSharp.SDK.Core.Utils
     using System.IO;
     using System.Reflection;
     using System.Security.Permissions;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 

@@ -28,7 +28,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Abstracts
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Abstract build of a menu component.
     /// </summary>

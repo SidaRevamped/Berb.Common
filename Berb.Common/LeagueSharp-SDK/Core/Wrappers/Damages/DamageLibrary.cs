@@ -19,11 +19,11 @@ namespace LeagueSharp.SDK
 {
     using System;
     using System.Collections.Generic;
-    using EloBuddy;
+
     using LeagueSharp.Data;
     using LeagueSharp.Data.DataTypes;
     using LeagueSharp.Data.Enumerations;
-
+    using EloBuddy;
     /// <summary>
     ///     Damage wrapper class, contains functions to calculate estimated damage to a unit and also provides damage details.
     /// </summary>
@@ -47,10 +47,10 @@ namespace LeagueSharp.SDK
         internal static void Initialize()
         {
             Events.OnLoad += (sender, args) =>
-                {
-                    DamageCollection = Data.Get<DamageDatabase>().Damage;
-                    CreatePassives();
-                };
+            {
+                DamageCollection = Data.Get<DamageDatabase>().Damage;
+                CreatePassives();
+            };
         }
 
         /// <summary>

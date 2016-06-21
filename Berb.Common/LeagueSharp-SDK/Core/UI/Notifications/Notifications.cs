@@ -24,7 +24,7 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK.Core.UI.IMenu;
     using LeagueSharp.SDK.Core.UI.IMenu.Values;
     using LeagueSharp.SDK.Core.Utils;

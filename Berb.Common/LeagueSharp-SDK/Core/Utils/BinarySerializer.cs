@@ -20,7 +20,7 @@ namespace LeagueSharp.SDK.Core.Utils
     using System.IO;
     using System.Runtime.Serialization;
     using System.Xml;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     The binary serializer.
     /// </summary>

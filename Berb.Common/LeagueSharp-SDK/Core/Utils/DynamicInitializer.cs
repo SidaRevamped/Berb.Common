@@ -19,7 +19,7 @@ namespace LeagueSharp.SDK.Core.Utils
 {
     using System;
     using System.Reflection.Emit;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
 
     /// <summary>

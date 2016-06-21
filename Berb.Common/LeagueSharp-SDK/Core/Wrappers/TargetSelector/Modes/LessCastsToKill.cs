@@ -27,7 +27,7 @@ namespace LeagueSharp.SDK.Modes
 using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK;
-using EloBuddy;
+using EloBuddy; using Enumerations;
     /// <summary>
     ///     The less casts to kill Mode.
     /// </summary>

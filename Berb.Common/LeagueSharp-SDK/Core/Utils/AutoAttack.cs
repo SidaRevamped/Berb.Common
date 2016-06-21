@@ -19,7 +19,7 @@ namespace LeagueSharp.SDK.Core.Utils
 {
     using System;
     using System.Linq;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     AutoAttack utility class.
     /// </summary>

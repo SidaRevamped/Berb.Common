@@ -22,7 +22,7 @@ namespace LeagueSharp.SDK
     using System.Linq;
 
     using SharpDX;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Path class, contains path tracker and a container
     /// </summary>

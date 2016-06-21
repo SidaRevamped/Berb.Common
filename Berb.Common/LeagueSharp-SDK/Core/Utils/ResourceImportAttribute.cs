@@ -18,7 +18,7 @@
 namespace LeagueSharp.SDK.Core.Utils
 {
     using System;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | AttributeTargets.Property)]
     internal class ResourceImportAttribute : Attribute
     {

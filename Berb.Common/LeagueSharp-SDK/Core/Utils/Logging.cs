@@ -20,9 +20,9 @@ namespace LeagueSharp.SDK.Core.Utils
     using System;
     using System.IO;
     using System.Runtime.CompilerServices;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
-
+    using Enumerations;
     /// <summary>
     ///     Logging class for LeagueSharp.SDK, used to log output data into a file and the console.
     /// </summary>

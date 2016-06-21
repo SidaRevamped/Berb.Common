@@ -25,7 +25,7 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     public static partial class Extensions
     {
         #region Public Methods and Operators

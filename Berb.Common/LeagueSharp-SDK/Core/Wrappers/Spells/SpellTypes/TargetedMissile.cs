@@ -8,7 +8,7 @@ using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK;
-using EloBuddy;
+using EloBuddy; 
 namespace LeagueSharp.SDK.Core.Wrappers.Spells.SpellTypes
 {
     class TargetedMissile

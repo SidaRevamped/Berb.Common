@@ -21,14 +21,14 @@ namespace LeagueSharp.SDK
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using EloBuddy.SDK.Enumerations;
-using EloBuddy.SDK.Events;
-using EloBuddy.SDK.Menu.Values;
-using EloBuddy.SDK.Menu;
-using EloBuddy.SDK;
-using EloBuddy;
+    using EloBuddy.SDK.Events;
+    using EloBuddy.SDK.Menu.Values;
+    using EloBuddy.SDK.Menu;
+    using EloBuddy.SDK;
+    using EloBuddy;
+    using Enumerations;
     using LeagueSharp.SDK.Core.Utils;
-
+    using Data.Enumerations;
     /// <summary>
     ///     Provides events for interrupting spells.
     /// </summary>

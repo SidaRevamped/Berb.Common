@@ -9,11 +9,12 @@
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
     using EloBuddy;
+    using Enumerations;
     using LeagueSharp.SDK.Clipper;
     using LeagueSharp.SDK.Core.Utils;
 
     using SharpDX;
-
+    using Data.DataTypes;
     public class SkillshotMissile : Skillshot
     {
         #region Constructors and Destructors

@@ -22,7 +22,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Skins
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Defines a Theme used to draw components of the menu.
     /// </summary>

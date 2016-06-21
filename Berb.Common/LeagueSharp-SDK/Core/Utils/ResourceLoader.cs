@@ -21,7 +21,7 @@ namespace LeagueSharp.SDK.Core.Utils
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
 
     internal static class ResourceLoader

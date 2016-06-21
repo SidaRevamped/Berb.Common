@@ -22,7 +22,7 @@ namespace LeagueSharp.SDK
 
     using LeagueSharp.Data.DataTypes;
     using LeagueSharp.Data.Enumerations;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using Core.Utils;    /// <summary>
                          ///     Damage wrapper class, contains functions to calculate estimated damage to a unit and also provides damage details.
                          /// </summary>

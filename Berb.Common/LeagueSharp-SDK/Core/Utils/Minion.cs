@@ -19,11 +19,11 @@ namespace LeagueSharp.SDK.Core.Utils
 {
     using System.Collections.Generic;
     using System.Linq;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
 
     using SharpDX;
-
+    using Enumerations;
     /// <summary>
     ///     The minion utils, contains a set of functions to quickly operate around minions.
     /// </summary>

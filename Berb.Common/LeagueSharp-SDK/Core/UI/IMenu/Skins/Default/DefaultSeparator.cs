@@ -25,7 +25,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Skins.Default
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Implements <see cref="ADrawable{MenuSeperator}" /> as a default skin.
     /// </summary>

@@ -1,7 +1,7 @@
 ﻿namespace LeagueSharp.SDK
 {
     using System.Linq;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
 
     public static partial class Damage
     {

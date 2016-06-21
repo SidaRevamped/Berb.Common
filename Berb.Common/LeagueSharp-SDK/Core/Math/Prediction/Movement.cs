@@ -24,11 +24,12 @@ namespace LeagueSharp.SDK
     using LeagueSharp.Data.Enumerations;
 
     using SharpDX;
-    using EloBuddy;
-    using Core.Utils;    /// <summary>
-                         ///     Calculates a prediction based off data values given by the source input and converts it into a output prediction
-                         ///     for movement, containing spell casting position and unit position in 3D-Space.
-                         /// </summary>
+    using EloBuddy; using Enumerations;
+    using Core.Utils;
+    using Enumerations;/// <summary>
+                       ///     Calculates a prediction based off data values given by the source input and converts it into a output prediction
+                       ///     for movement, containing spell casting position and unit position in 3D-Space.
+                       /// </summary>
     public class Movement
     {
         #region Public Methods and Operators

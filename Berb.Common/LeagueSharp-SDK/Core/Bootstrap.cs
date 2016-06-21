@@ -25,6 +25,7 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK;
     using EloBuddy;
+    using Enumerations;
     using LeagueSharp.SDK.Core.Utils;
 
     /// <summary>
@@ -62,22 +63,22 @@ namespace LeagueSharp.SDK
             initialized = true;
 
             // Initial notification.
-            Logging.Write()(LogLevel.Info, "[-- SDK Bootstrap Loading --]");
+            Logging.Write()(Enumerations.LogLevel.Info, "[-- SDK Bootstrap Loading --]");
 
             // Load Resource Content.
             //ResourceLoader.Initialize();
-            Logging.Write()(LogLevel.Info, "[SDK Bootstrap] Resources Initialized.");
+            Logging.Write()(Enumerations.LogLevel.Info, "[SDK Bootstrap] Resources Initialized.");
 
             // Load GameObjects.
             GameObjects.Initialize();
-            Logging.Write()(LogLevel.Info, "[SDK Bootstrap] GameObjects Initialized.");
+            Logging.Write()(Enumerations.LogLevel.Info, "[SDK Bootstrap] GameObjects Initialized.");
 
             // Load Damages.
             //Damage.Initialize();
-            Logging.Write()(LogLevel.Info, "[SDK Bootstrap] Damage Library Initialized.");
+            Logging.Write()(Enumerations.LogLevel.Info, "[SDK Bootstrap] Damage Library Initialized.");
 
             // Final notification.
-            Logging.Write()(LogLevel.Info, "[-- SDK Bootstrap Loading --]");
+            Logging.Write()(Enumerations.LogLevel.Info, "[-- SDK Bootstrap Loading --]");
         }
 
         #endregion

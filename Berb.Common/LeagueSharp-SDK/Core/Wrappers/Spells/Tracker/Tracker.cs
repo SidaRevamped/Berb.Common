@@ -10,7 +10,7 @@
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK.Core.Utils;
 
     public class Tracker
@@ -100,7 +100,7 @@
                         }
                         catch (Exception ex)
                         {
-                            Logging.Write()(LogLevel.Warn, "Wrong SpellType for Skillshot {0}, a Missile Type was expected", skillshot.SData.SpellName);
+                            Logging.Write()(Enumerations.LogLevel.Warn, "Wrong SpellType for Skillshot {0}, a Missile Type was expected", skillshot.SData.SpellName);
                         }
                     }
                 }

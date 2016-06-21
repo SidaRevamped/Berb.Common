@@ -19,7 +19,7 @@ namespace LeagueSharp.SDK.Core.Utils
 {
     using System;
     using System.Windows.Forms;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using LeagueSharp.SDK;
 
     using SharpDX;

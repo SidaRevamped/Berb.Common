@@ -23,7 +23,7 @@ namespace LeagueSharp.SDK
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
 
     /// <summary>
     ///     Turret tracker and event handler.

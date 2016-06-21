@@ -28,7 +28,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Skins.Blue
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using SharpDX;
     using SharpDX.Direct3D9;
 

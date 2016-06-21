@@ -23,7 +23,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Arguments for the OnValueChanged event.
     /// </summary>

@@ -29,7 +29,7 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Humanize the target selector process
     /// </summary>

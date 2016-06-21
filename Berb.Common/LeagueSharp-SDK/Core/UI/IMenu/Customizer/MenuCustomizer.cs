@@ -25,7 +25,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Customizer
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     This menu allows the user to modify several properties in <see cref="MenuSettings" />.
     /// </summary>

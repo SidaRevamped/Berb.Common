@@ -9,12 +9,13 @@
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
     using EloBuddy;
+    using Enumerations;
     using LeagueSharp.SDK.Clipper;
     using LeagueSharp.SDK.Core.Utils;
     using LeagueSharp.SDK.Core.Wrappers.Spells.SpellTypes;
 
     using SharpDX;
-
+    using Data.DataTypes;
     public class Skillshot : BaseSpell 
     {
         #region Constructors and Destructors
@@ -66,7 +67,7 @@
 
                     if (this.StartPosition == Vector2.Zero)
                     {
-                        Logging.Write()(LogLevel.Warn, "[Skillshot] Couldn't find the start position for skillshot: {0}, FromObject: {1}", this, this.SData.FromObject);
+                        Logging.Write()(Enumerations.LogLevel.Warn, "[Skillshot] Couldn't find the start position for skillshot: {0}, FromObject: {1}", this, this.SData.FromObject);
                         return false;
                     }
                 }

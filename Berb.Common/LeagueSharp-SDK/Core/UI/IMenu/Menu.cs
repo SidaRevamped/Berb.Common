@@ -31,7 +31,7 @@ using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK;
-using EloBuddy;
+using EloBuddy; using Enumerations;
     /// <summary>
     ///     Menu Value Changed delegate
     /// </summary>

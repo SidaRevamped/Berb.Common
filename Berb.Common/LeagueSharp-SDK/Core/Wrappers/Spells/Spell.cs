@@ -24,14 +24,17 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
-    using EloBuddy;
-    using LeagueSharp.SDK.Core.Utils;
-
+    using EloBuddy; using Enumerations;
     using SharpDX;
     using EloBuddy.SDK;
-    using Data.Enumerations;    /// <summary>
-                                ///     Spell Container
-                                /// </summary>
+
+    using LeagueSharp.Data.Enumerations;
+    using LeagueSharp.SDK.Enumerations;
+    using LeagueSharp.SDK.Core.Utils;
+
+    /// <summary>
+    ///     Spell Container
+    /// </summary>
     public class Spell
     {
         #region Fields
@@ -78,6 +81,61 @@ namespace LeagueSharp.SDK
         /// <summary>
         ///     Initializes a new instance of the <see cref="Spell" /> class.
         /// </summary>
+        public Spell() { }
+
+        public Spell(SpellSlot slot)
+        {
+            var spellData = SpellDatabase.GetBySpellSlot(slot, ObjectManager.Player.CharData.BaseSkinName);
+
+            if (spellData == null)
+            {
+                return;
+            }
+
+            // Charged Spell:
+            if (spellData.ChargedSpellName != "")
+            {
+                ChargedBuffName = spellData.ChargedBuffName;
+                ChargedMaxRange = spellData.ChargedMaxRange;
+                ChargedMinRange = spellData.ChargedMinRange;
+                ChargedSpellName = spellData.ChargedSpellName;
+                ChargeDuration = spellData.ChargeDuration;
+                Delay = spellData.Delay;
+                Range = spellData.Range;
+                Width = spellData.Radius > 0 && spellData.Radius < 30000
+                            ? spellData.Radius
+                            : ((spellData.Width > 0 && spellData.Width < 30000) ? spellData.Width : 30000);
+                Collision = (spellData.CollisionObjects != null
+                             && spellData.CollisionObjects.Any(obj => obj == CollisionableObjects.Minions));
+                Speed = spellData.MissileSpeed;
+                IsChargedSpell = true;
+                Type = SpellDatabase.GetSkillshotTypeFromSpellType(spellData.SpellType);
+                return;
+            }
+            // Skillshot:
+            if (spellData.CastType.Any(type => type == CastType.Position || type == CastType.Direction))
+            {
+                Delay = spellData.Delay;
+                Range = spellData.Range;
+                Width = spellData.Radius > 0 && spellData.Radius < 30000
+                            ? spellData.Radius
+                            : ((spellData.Width > 0 && spellData.Width < 30000) ? spellData.Width : 30000);
+                Collision = (spellData.CollisionObjects != null
+                             && spellData.CollisionObjects.Any(obj => obj == CollisionableObjects.Minions));
+                Speed = spellData.MissileSpeed;
+                IsSkillshot = true;
+                Type = SpellDatabase.GetSkillshotTypeFromSpellType(spellData.SpellType);
+                return;
+            }
+            // Targeted:
+            Range = spellData.Range;
+            Delay = spellData.Delay;
+            Speed = spellData.MissileSpeed;
+        }
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Spell" /> class.
+        /// </summary>
         /// <param name="slot">
         ///     The SpellSlot
         /// </param>
@@ -87,7 +145,9 @@ namespace LeagueSharp.SDK
         /// <param name="hitChance">
         ///     Minimum Hit Chance
         /// </param>
-        public Spell(SpellSlot slot, bool loadFromGame, HitChance hitChance = HitChance.Medium)
+        /// 
+        [Obsolete("Most of values will be wrong! If you want to use SpellDb, use the Spell(SpellSlot) override instead!")]
+        public Spell(SpellSlot slot, bool loadFromGame, Enumerations.HitChance hitChance = Enumerations.HitChance.Medium)
         {
             this.Slot = slot;
 
@@ -115,7 +175,7 @@ namespace LeagueSharp.SDK
         /// <param name="range">
         ///     Spell Range
         /// </param>
-        public Spell(SpellSlot slot, float range = float.MaxValue)
+        public Spell(SpellSlot slot, float range)
         {
             this.Slot = slot;
             this.Range = range;
@@ -240,7 +300,7 @@ namespace LeagueSharp.SDK
         /// <summary>
         ///     Gets or sets the min hit chance.
         /// </summary>
-        public HitChance MinHitChance { get; set; }
+        public Enumerations.HitChance MinHitChance { get; set; }
 
         /// <summary>
         ///     Gets or sets the range.
@@ -385,7 +445,7 @@ namespace LeagueSharp.SDK
             bool exactHitChance = false,
             bool areaOfEffect = false,
             int minTargets = -1,
-            HitChance tempHitChance = HitChance.None)
+            Enumerations.HitChance tempHitChance = Enumerations.HitChance.None)
         {
             if (!unit.LSIsValid())
             {
@@ -443,9 +503,9 @@ namespace LeagueSharp.SDK
                 return CastStates.OutOfRange;
             }
 
-            if (prediction.Hitchance < ((tempHitChance == HitChance.None) ? this.MinHitChance : tempHitChance)
+            if (prediction.Hitchance < ((tempHitChance == Enumerations.HitChance.None) ? this.MinHitChance : tempHitChance)
                 || (exactHitChance
-                    && prediction.Hitchance != ((tempHitChance == HitChance.None) ? this.MinHitChance : tempHitChance)))
+                    && prediction.Hitchance != ((tempHitChance == Enumerations.HitChance.None) ? this.MinHitChance : tempHitChance)))
             {
                 return CastStates.LowHitChance;
             }
@@ -609,7 +669,7 @@ namespace LeagueSharp.SDK
         /// <returns>
         ///     Was Spell Casted
         /// </returns>
-        public CastStates CastIfHitchanceEquals(Obj_AI_Base unit, HitChance hitChance)
+        public CastStates CastIfHitchanceEquals(Obj_AI_Base unit, Enumerations.HitChance hitChance)
         {
             return this.Cast(unit, true, false, -1, hitChance);
         }
@@ -626,7 +686,7 @@ namespace LeagueSharp.SDK
         /// <returns>
         ///     Was Spell Casted
         /// </returns>
-        public CastStates CastIfHitchanceMinimum(Obj_AI_Base unit, HitChance hitChance)
+        public CastStates CastIfHitchanceMinimum(Obj_AI_Base unit, Enumerations.HitChance hitChance)
         {
             return this.Cast(unit, false, false, -1, hitChance);
         }
@@ -801,10 +861,13 @@ namespace LeagueSharp.SDK
             return SDK.Collision.GetCollision(
                 to.Select(h => h.ToVector3()).ToList(),
                 new PredictionInput
-                    {
-                        From = fromVector2.ToVector3(), Type = this.Type, Radius = this.Width,
-                        Delay = delayOverride > 0 ? delayOverride : this.Delay, Speed = this.Speed
-                    });
+                {
+                    From = fromVector2.ToVector3(),
+                    Type = this.Type,
+                    Radius = this.Width,
+                    Delay = delayOverride > 0 ? delayOverride : this.Delay,
+                    Speed = this.Speed
+                });
         }
 
         /// <summary>
@@ -852,7 +915,7 @@ namespace LeagueSharp.SDK
         /// <returns>
         ///     Hit Count
         /// </returns>
-        public float GetHitCount(HitChance hitChance = HitChance.High)
+        public float GetHitCount(Enumerations.HitChance hitChance = Enumerations.HitChance.High)
         {
             return GameObjects.EnemyHeroes.Select(e => this.GetPrediction(e)).Count(p => p.Hitchance >= hitChance);
         }
@@ -931,12 +994,19 @@ namespace LeagueSharp.SDK
             return
                 Movement.GetPrediction(
                     new PredictionInput
-                        {
-                            Unit = unit, Delay = this.Delay, Radius = this.Width, Speed = this.Speed, From = this.From,
-                            Range = (overrideRange > 0) ? overrideRange : this.Range, Collision = this.Collision,
-                            Type = this.Type, RangeCheckFrom = this.RangeCheckFrom, AoE = aoe,
-                            CollisionObjects = collisionable
-                        });
+                    {
+                        Unit = unit,
+                        Delay = this.Delay,
+                        Radius = this.Width,
+                        Speed = this.Speed,
+                        From = this.From,
+                        Range = (overrideRange > 0) ? overrideRange : this.Range,
+                        Collision = this.Collision,
+                        Type = this.Type,
+                        RangeCheckFrom = this.RangeCheckFrom,
+                        AoE = aoe,
+                        CollisionObjects = collisionable
+                    });
         }
 
         /// <summary>
@@ -970,7 +1040,7 @@ namespace LeagueSharp.SDK
         ///     All of the units that this spell can hit that is greater then or equal to the <see cref="HitChance" />
         ///     provided.
         /// </returns>
-        public IEnumerable<Obj_AI_Base> GetUnitsByHitChance(HitChance minimumHitChance = HitChance.High)
+        public IEnumerable<Obj_AI_Base> GetUnitsByHitChance(Enumerations.HitChance minimumHitChance = Enumerations.HitChance.High)
         {
             return
                 GameObjects.Enemy.Where(
@@ -1295,7 +1365,7 @@ namespace LeagueSharp.SDK
             Obj_AI_Base unit,
             Vector3 castPosition,
             int extraWidth = 0,
-            HitChance minHitChance = HitChance.High)
+            Enumerations.HitChance minHitChance = Enumerations.HitChance.High)
         {
             var unitPosition = this.GetPrediction(unit);
             return unitPosition.Hitchance >= minHitChance

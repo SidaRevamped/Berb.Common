@@ -25,7 +25,7 @@ namespace LeagueSharp.SDK
     using LeagueSharp.SDK.Polygons;
 
     using SharpDX;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     using Core.Utils;    /// <summary>
                          ///     Collision class, calculates collision for moving objects.
                          /// </summary>

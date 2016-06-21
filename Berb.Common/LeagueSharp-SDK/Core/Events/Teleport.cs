@@ -20,12 +20,11 @@ namespace LeagueSharp.SDK
     using System;
     using System.Collections.Generic;
     using System.Reflection;
-    using EloBuddy.SDK.Enumerations;
 using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK.Menu;
 using EloBuddy.SDK;
-using EloBuddy;
+using EloBuddy; using Enumerations;
     /// <summary>
     ///     Teleport class, contains Teleport even which is triggered on recalls, teleports and shen or twisted fate
     ///     ultimates.

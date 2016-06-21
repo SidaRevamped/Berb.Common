@@ -30,7 +30,7 @@ namespace LeagueSharp.SDK.Core.UI.IMenu
 using EloBuddy.SDK.Events;
 using EloBuddy.SDK.Menu.Values;
 using EloBuddy.SDK;
-using EloBuddy;
+using EloBuddy; using Enumerations;
     /// <summary>
     ///     Menu Interface class, used to control the menu.
     /// </summary>

@@ -18,7 +18,7 @@
 namespace LeagueSharp.SDK.Core.Utils
 {
     using SharpDX;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Cursor utility, tracks after cursor actions.
     /// </summary>

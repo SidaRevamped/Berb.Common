@@ -27,7 +27,7 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy;
+    using EloBuddy; using Enumerations;
     /// <summary>
     ///     Provides an event for when the game starts.
     /// </summary>
@@ -69,8 +69,8 @@ namespace LeagueSharp.SDK
                 }
                 catch (Exception e)
                 {
-                     Logging.Write()(SDK.LogLevel.Fatal, "Failure to invoke invocation.\n{0}", e);
-                     Logging.Write()(SDK.LogLevel.Fatal, "Failure to invoke invocation.\n{0}", e);
+                     Logging.Write()(SDK.Enumerations.LogLevel.Fatal, "Failure to invoke invocation.\n{0}", e);
+                     Logging.Write()(SDK.Enumerations.LogLevel.Fatal, "Failure to invoke invocation.\n{0}", e);
                 }
             }
         }
