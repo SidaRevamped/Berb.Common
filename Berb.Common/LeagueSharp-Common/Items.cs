@@ -25,7 +25,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
-using EloBuddy.SDK;
+//using EloBuddy.SDK;
 using SharpDX;
 
 #endregion
@@ -263,7 +263,7 @@ namespace LeagueSharp.Common
             /// <returns></returns>
             public bool IsInRange(Vector3 target)
             {
-                return ObjectManager.Player.ServerPosition.Distance(target, true) < RangeSqr;
+                return ObjectManager.Player.ServerPosition.LSDistance(target, true) < RangeSqr;
             }
 
             /// <summary>

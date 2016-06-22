@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
-using EloBuddy.SDK;
+//using EloBuddy.SDK;
 using SharpDX;
 using Color = System.Drawing.Color;
 
@@ -80,7 +80,7 @@ namespace LeagueSharp.Common
         /// </summary>
         public static bool IsBothFacing(Obj_AI_Base source, Obj_AI_Base target)
         {
-            return source.IsFacing(target) && target.IsFacing(source);
+            return source.LSIsFacing(target) && target.LSIsFacing(source);
         }
 
         /// <summary>

@@ -227,7 +227,7 @@ using EloBuddy; using Enumerations;
             Vector2 segmentEnd,
             bool onlyIfOnSegment = false)
         {
-            var objects = point.ProjectOn(segmentStart, segmentEnd);
+            var objects = point.LSProjectOn(segmentStart, segmentEnd);
 
             return (objects.IsOnSegment || onlyIfOnSegment == false)
                        ? Vector2.Distance(objects.SegmentPoint, point)
@@ -270,7 +270,7 @@ using EloBuddy; using Enumerations;
             Vector2 segmentEnd,
             bool onlyIfOnSegment = false)
         {
-            var objects = point.ProjectOn(segmentStart, segmentEnd);
+            var objects = point.LSProjectOn(segmentStart, segmentEnd);
 
             return (objects.IsOnSegment || onlyIfOnSegment == false)
                        ? Vector2.DistanceSquared(objects.SegmentPoint, point)
@@ -286,7 +286,7 @@ using EloBuddy; using Enumerations;
         /// <returns>Extended Vector2</returns>
         public static Vector2 Extend(this Vector2 vector2, Vector2 toVector2, float distance)
         {
-            return vector2 + (distance * (toVector2 - vector2).Normalized());
+            return vector2 + (distance * (toVector2 - vector2).LSNormalized());
         }
 
         /// <summary>

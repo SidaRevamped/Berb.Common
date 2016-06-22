@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
-using EloBuddy.SDK;
+//using EloBuddy.SDK;
 using SharpDX;
 
 #endregion
@@ -137,7 +137,7 @@ namespace LeagueSharp.Common
             MinionOrderTypes order = MinionOrderTypes.Health)
         {
             var result = (from minion in ObjectManager.Get<Obj_AI_Minion>()
-                where minion.IsValidTarget(range, false, @from)
+                where minion.LSIsValidTarget(range, false, @from)
                 let minionTeam = minion.Team
                 where
                     team == MinionTeam.Neutral && minionTeam == GameObjectTeam.Neutral ||
@@ -235,7 +235,7 @@ namespace LeagueSharp.Common
         {
             var result = new Vector2();
             var minionCount = 0;
-            var startPos = ObjectManager.Player.ServerPosition.To2D();
+            var startPos = ObjectManager.Player.ServerPosition.LSTo2D();
 
             range = range*range;
 
@@ -254,7 +254,7 @@ namespace LeagueSharp.Common
                     {
                         var circle = MEC.GetMec(subGroup);
 
-                        if (circle.Radius <= width && circle.Center.Distance(startPos, true) <= range)
+                        if (circle.Radius <= width && circle.Center.LSDistance(startPos, true) <= range)
                         {
                             minionCount = subGroup.Count;
                             return new FarmLocation(circle.Center, minionCount);
@@ -266,9 +266,9 @@ namespace LeagueSharp.Common
             {
                 foreach (var pos in minionPositions)
                 {
-                    if (pos.Distance(startPos, true) <= range)
+                    if (pos.LSDistance(startPos, true) <= range)
                     {
-                        var count = minionPositions.Count(pos2 => pos.Distance(pos2, true) <= width*width);
+                        var count = minionPositions.Count(pos2 => pos.LSDistance(pos2, true) <= width*width);
 
                         if (count >= minionCount)
                         {
@@ -293,7 +293,7 @@ namespace LeagueSharp.Common
         {
             var result = new Vector2();
             var minionCount = 0;
-            var startPos = ObjectManager.Player.ServerPosition.To2D();
+            var startPos = ObjectManager.Player.ServerPosition.LSTo2D();
 
             var posiblePositions = new List<Vector2>();
             posiblePositions.AddRange(minionPositions);
@@ -312,12 +312,12 @@ namespace LeagueSharp.Common
 
             foreach (var pos in posiblePositions)
             {
-                if (pos.Distance(startPos, true) <= range*range)
+                if (pos.LSDistance(startPos, true) <= range*range)
                 {
-                    var endPos = startPos + range*(pos - startPos).Normalized();
+                    var endPos = startPos + range*(pos - startPos).LSNormalized();
 
                     var count =
-                        minionPositions.Count(pos2 => pos2.Distance(startPos, endPos, true, true) <= width*width);
+                        minionPositions.Count(pos2 => pos2.LSDistance(startPos, endPos, true, true) <= width*width);
 
                     if (count >= minionCount)
                     {
@@ -353,7 +353,7 @@ namespace LeagueSharp.Common
             SkillshotType stype,
             Vector3 rangeCheckFrom = new Vector3())
         {
-            from = from.To2D().IsValid() ? from : ObjectManager.Player.ServerPosition;
+            from = from.LSTo2D().IsValid() ? from : ObjectManager.Player.ServerPosition;
 
             return (from minion in minions
                 select
@@ -372,7 +372,7 @@ namespace LeagueSharp.Common
                         })
                 into pos
                 where pos.Hitchance >= HitChance.High
-                select pos.UnitPosition.To2D()).ToList();
+                select pos.UnitPosition.LSTo2D()).ToList();
         }
 
         /*

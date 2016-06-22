@@ -25,7 +25,7 @@
 using System;
 using System.Linq;
 using EloBuddy;
-using EloBuddy.SDK;
+//using EloBuddy.SDK;
 using SharpDX;
 
 #endregion
@@ -123,9 +123,9 @@ namespace LeagueSharp.Common
             }
             var myRange = GetRealAutoAttackRange(target);
             return Vector2.DistanceSquared(
-                target is Obj_AI_Base ? ((Obj_AI_Base)target).ServerPosition.To2D() : target.Position.To2D(),
+                target is Obj_AI_Base ? ((Obj_AI_Base)target).ServerPosition.LSTo2D() : target.Position.LSTo2D(),
                 ObjectManager.Player
-                    .ServerPosition.To2D()) <= myRange * myRange;
+                    .ServerPosition.LSTo2D()) <= myRange * myRange;
         }
 
         /// <summary>

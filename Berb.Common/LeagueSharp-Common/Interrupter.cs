@@ -26,13 +26,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
-using EloBuddy.SDK;
-using EloBuddy.SDK.Enumerations;
-using EloBuddy.SDK.Events;
-using EloBuddy.SDK.Menu;
-using EloBuddy.SDK.Menu.Values;
-using SharpDX;
-using Color = System.Drawing.Color;
 
 #endregion
 
@@ -430,7 +423,7 @@ namespace LeagueSharp.Common
         /// <param name="args">The <see cref="EventArgs"/> instance containing the event data.</param>
         private static void Game_OnGameUpdate(EventArgs args)
         {
-            foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(e => e.IsValidTarget()))
+            foreach (var enemy in ObjectManager.Get<AIHeroClient>().Where(e => e.LSIsValidTarget()))
             {
                 foreach (var spell in
                     Spells.Where(

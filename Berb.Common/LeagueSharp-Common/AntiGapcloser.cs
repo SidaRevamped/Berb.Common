@@ -27,7 +27,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using EloBuddy;
-using EloBuddy.SDK;
 using SharpDX;
 
 #endregion
@@ -785,7 +784,7 @@ namespace LeagueSharp.Common
                             gapcloser =>
                                 gapcloser.SkillType == GapcloserType.Targeted ||
                                 (gapcloser.SkillType == GapcloserType.Skillshot &&
-                                 ObjectManager.Player.Distance(gapcloser.Sender, true) < 250000) && gapcloser.Sender.IsEnemy)) // 500 * 500
+                                 ObjectManager.Player.LSDistance(gapcloser.Sender, true) < 250000) && gapcloser.Sender.IsEnemy)) // 500 * 500
             {
                 OnEnemyGapcloser(gapcloser);
             }

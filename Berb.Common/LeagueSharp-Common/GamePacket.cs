@@ -27,7 +27,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using EloBuddy;
-using EloBuddy.SDK;
+//using EloBuddy.SDK;
 using SharpDX;
 
 #endregion
@@ -439,7 +439,7 @@ namespace LeagueSharp.Common
         /// <returns></returns>
         public int[][] SearchPosition(Vector3 position)
         {
-            return SearchPosition(position.To2D());
+            return SearchPosition(position.LSTo2D());
         }
 
         /// <summary>
@@ -449,7 +449,7 @@ namespace LeagueSharp.Common
         /// <returns></returns>
         public int[][] SearchPosition(GameObject unit)
         {
-            return SearchPosition(unit.Position.To2D());
+            return SearchPosition(unit.Position.LSTo2D());
         }
 
         /// <summary>
@@ -459,8 +459,8 @@ namespace LeagueSharp.Common
         /// <returns></returns>
         public int[][] SearchPosition(Obj_AI_Base unit)
         {
-            var pos = SearchPosition(unit.Position.To2D());
-            var pos2 = SearchPosition(unit.ServerPosition.To2D());
+            var pos = SearchPosition(unit.Position.LSTo2D());
+            var pos2 = SearchPosition(unit.ServerPosition.LSTo2D());
 
             if (pos == null)
             {
@@ -493,7 +493,7 @@ namespace LeagueSharp.Common
         /// <returns></returns>
         public int[][] SearchGameTile(Vector3 position)
         {
-            return SearchGameTile(position.To2D());
+            return SearchGameTile(position.LSTo2D());
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace LeagueSharp.Common
         /// <returns></returns>
         public int[][] SearchGameTile(GameObject obj)
         {
-            return SearchGameTile(obj.Position.To2D());
+            return SearchGameTile(obj.Position.LSTo2D());
         }
 
         /// <summary>

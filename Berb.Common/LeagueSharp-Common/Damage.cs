@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
-using EloBuddy.SDK;
+//using EloBuddy.SDK;
 using LeagueSharp.Common.Data;
 using static LeagueSharp.Common.Data.MasteryData;
 
@@ -1286,7 +1286,7 @@ namespace LeagueSharp.Common
             p = new PassiveDamage
             {
                 ChampionName = "Shaco",
-                IsActive = (source, target) => source.IsFacing(target) && !source.IsFacing(target),
+                IsActive = (source, target) => source.LSIsFacing(target) && !source.LSIsFacing(target),
                 GetDamage =
                     (source, target) =>
                     source.CalcDamage(
@@ -7031,7 +7031,7 @@ namespace LeagueSharp.Common
                         HeroManager.AllHeroes.Any(
                             h =>
                             h.NetworkId != source.NetworkId && h.Team == source.Team
-                            && h.Distance(minionTarget.Position) < 1100))
+                            && h.LSDistance(minionTarget.Position) < 1100))
                     {
                         var value = 0;
 
@@ -7435,7 +7435,7 @@ namespace LeagueSharp.Common
                 Mastery BondofStones = targetHero.GetMastery(Resolve.BondofStones);
                 if (BondofStones != null && BondofStones.IsActive())
                 {
-                    bool closebyenemies = HeroManager.Enemies.Any(x => x.NetworkId != target.NetworkId && x.Distance(target) <= 500); //500 is not the real value
+                    bool closebyenemies = HeroManager.Enemies.Any(x => x.NetworkId != target.NetworkId && x.LSDistance(target) <= 500); //500 is not the real value
                     if (closebyenemies)
                     {
                         amount *= 0.92d;

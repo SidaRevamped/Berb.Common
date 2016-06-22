@@ -30,7 +30,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using EloBuddy;
-using EloBuddy.SDK;
+//using EloBuddy.SDK;
 using SharpDX;
 using SharpDX.Direct3D9;
 using Color = System.Drawing.Color;
@@ -397,7 +397,7 @@ namespace LeagueSharp.Common
                     {
                         DrawCircle(Unit.Position + _offset, Radius, Color, Width, ZDeep);
                     }
-                    else if ((Position + _offset).To2D().IsValid())
+                    else if ((Position + _offset).LSTo2D().IsValid())
                     {
                         DrawCircle(Position + _offset, Radius, Color, Width, ZDeep);
                     }
@@ -772,7 +772,7 @@ namespace LeagueSharp.Common
                     _effect.Begin();
                     _effect.BeginPass(0);
                     _effect.SetValue(
-                        "ProjectionMatrix", Matrix.Translation(position.SwitchYZ()) * Drawing.View * Drawing.Projection);
+                        "ProjectionMatrix", Matrix.Translation(position.LSSwitchYZ()) * Drawing.View * Drawing.Projection);
                     _effect.SetValue(
                         "CircleColor", new Vector4(color.R / 255f, color.G / 255f, color.B / 255f, color.A / 255f));
                     _effect.SetValue("Radius", radius);

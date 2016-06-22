@@ -25,132 +25,103 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LeagueSharp.Common.Data;
+using LeagueSharp.Data.Enumerations;
+using SharpDX;
 using EloBuddy;
 using EloBuddy.SDK;
-using SharpDX;
-using LeagueSharp.Data.Enumerations;
-using LeagueSharp.Common.Data;
 
 #endregion
 
 namespace LeagueSharp.Common
 {
     /// <summary>
-    ///     This class allows you to handle the spells easily.
+    /// This class allows you to handle the spells easily.
     /// </summary>
     public class Spell
     {
         /// <summary>
-        ///     The state of the spell after being cases.
+        /// The state of the spell after being cases.
         /// </summary>
         public enum CastStates
         {
             /// <summary>
-            ///     The spell was successfully casted
+            /// The spell was successfully casted
             /// </summary>
             SuccessfullyCasted,
 
             /// <summary>
-            ///     The spell was not ready
+            /// The spell was not ready
             /// </summary>
             NotReady,
 
             /// <summary>
-            ///     The spell was not casted
+            /// The spell was not casted
             /// </summary>
             NotCasted,
 
             /// <summary>
-            ///     The spell was out of range
+            /// The spell was out of range
             /// </summary>
             OutOfRange,
 
             /// <summary>
-            ///     There is a collision.
+            /// There is a collision.
             /// </summary>
             Collision,
 
             /// <summary>
-            ///     There is not enough targets
+            /// There is not enough targets
             /// </summary>
             NotEnoughTargets,
 
             /// <summary>
-            ///     The spell has a low hit chance
+            /// The spell has a low hit chance
             /// </summary>
-            LowHitChance
+            LowHitChance,
         }
 
         /// <summary>
-        ///     Diffrenet object names
-        /// </summary>
-        private readonly string[] _deleteObject =
-        {
-            "Fiddlesticks_Base_Drain.troy", "katarina_deathLotus_tar.troy",
-            "Galio_Base_R_explo.troy", "Malzahar_Base_R_Beam.troy",
-            "ReapTheWhirlwind_green_cas.troy"
-        };
-
-        /// <summary>
-        ///     Diffrenet spell process names
-        /// </summary>
-        private readonly string[] _processName =
-        {
-            "DrainChannel", "KatarinaR", "Crowstorm",
-            "GalioIdolOfDurand", "AlZaharNetherGrasp",
-            "ReapTheWhirlwind"
-        };
-
-        /// <summary>
-        ///     Last time casting has been issued
-        /// </summary>
-        private int _cancelSpellIssue;
-
-        /// <summary>
-        ///     The tick the charged spell was casted at.
+        /// The tick the charged spell was casted at.
         /// </summary>
         private int _chargedCastedT;
 
         /// <summary>
-        ///     The tick the charged request was sent at.
+        /// The tick the charged request was sent at.
         /// </summary>
         private int _chargedReqSentT;
 
         /// <summary>
-        ///     The from position.
+        /// The from position.
         /// </summary>
         private Vector3 _from;
 
         /// <summary>
-        ///     The range of the spell
+        /// The range of the spell
         /// </summary>
         private float _range;
 
         /// <summary>
-        ///     The position to check the range from.
+        /// The position to check the range from.
         /// </summary>
         private Vector3 _rangeCheckFrom;
 
         /// <summary>
-        ///     The width
+        /// The width
         /// </summary>
         private float _width;
 
         public Spell() { }
 
         /// <summary>
-        ///     check if the spell is being channeled
-        /// </summary>
-        public bool IsChanneling;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="Spell" /> class.
+        /// Initializes a new instance of the <see cref="Spell"/> class.
         /// </summary>
         /// <param name="slot">The slot.</param>
         /// <param name="range">The range.</param>
         /// <param name="damageType">Type of the damage.</param>
         public Spell(SpellSlot slot,
-            float range = float.MaxValue, DamageType damageType = DamageType.Physical)
+            float range = float.MaxValue,
+            DamageType damageType = DamageType.Physical)
         {
             Slot = slot;
             Range = range;
@@ -215,99 +186,98 @@ namespace LeagueSharp.Common
             IsSkillshot = false;
         }
 
-
         /// <summary>
-        ///     Gets or sets the name of the charged buff.
+        /// Gets or sets the name of the charged buff.
         /// </summary>
         /// <value>The name of the charged buff.</value>
         public string ChargedBuffName { get; set; }
 
         /// <summary>
-        ///     Gets or sets the charged maximum range.
+        /// Gets or sets the charged maximum range.
         /// </summary>
         /// <value>The charged maximum range.</value>
         public int ChargedMaxRange { get; set; }
 
         /// <summary>
-        ///     Gets or sets the charged minimum range.
+        /// Gets or sets the charged minimum range.
         /// </summary>
         /// <value>The charged minimum range.</value>
         public int ChargedMinRange { get; set; }
 
         /// <summary>
-        ///     Gets or sets the name of the charged spell.
+        /// Gets or sets the name of the charged spell.
         /// </summary>
         /// <value>The name of the charged spell.</value>
         public string ChargedSpellName { get; set; }
 
         /// <summary>
-        ///     Gets or sets the duration of the charge.
+        /// Gets or sets the duration of the charge.
         /// </summary>
         /// <value>The duration of the charge.</value>
         public int ChargeDuration { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether this <see cref="Spell" /> has collision.
+        /// Gets or sets a value indicating whether this <see cref="Spell"/> has collision.
         /// </summary>
         /// <value><c>true</c> if the spell has collision; otherwise, <c>false</c>.</value>
         public bool Collision { get; set; }
 
         /// <summary>
-        ///     Gets or sets the delay.
+        /// Gets or sets the delay.
         /// </summary>
         /// <value>The delay.</value>
         public float Delay { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether this instance is charged spell.
+        /// Gets or sets a value indicating whether this instance is charged spell.
         /// </summary>
         /// <value><c>true</c> if this instance is charged spell; otherwise, <c>false</c>.</value>
         public bool IsChargedSpell { get; set; }
 
         /// <summary>
-        ///     Gets or sets a value indicating whether this instance is skillshot.
+        /// Gets or sets a value indicating whether this instance is skillshot.
         /// </summary>
         /// <value><c>true</c> if this instance is skillshot; otherwise, <c>false</c>.</value>
         public bool IsSkillshot { get; set; }
 
         /// <summary>
-        ///     Gets or sets the last cast attempt tick.
+        /// Gets or sets the last cast attempt tick.
         /// </summary>
         /// <value>The last cast attempt tick.</value>
         public int LastCastAttemptT { get; set; }
 
         /// <summary>
-        ///     Gets or sets the minimum hit chance.
+        /// Gets or sets the minimum hit chance.
         /// </summary>
         /// <value>The minimum hit chance.</value>
         public HitChance MinHitChance { get; set; }
 
         /// <summary>
-        ///     Gets or sets the spell slot.
+        /// Gets or sets the spell slot.
         /// </summary>
         /// <value>The slot.</value>
         public SpellSlot Slot { get; set; }
 
         /// <summary>
-        ///     Gets or sets the speed.
+        /// Gets or sets the speed.
         /// </summary>
         /// <value>The speed.</value>
         public float Speed { get; set; }
 
         /// <summary>
-        ///     Gets or sets the type of skillshot.
+        /// Gets or sets the type of skillshot.
         /// </summary>
         /// <value>The type of skillshot.</value>
         public SkillshotType Type { get; set; }
 
         /// <summary>
-        ///     Gets or sets the type of the damage.
+        /// Gets or sets the type of the damage.
         /// </summary>
         /// <value>The type of the damage.</value>
         public DamageType DamageType { get; set; }
 
         /// <summary>
-        ///     Gets or sets the width.
+        /// Gets or sets the width.
         /// </summary>
         /// <value>The width.</value>
         public float Width
@@ -316,18 +286,18 @@ namespace LeagueSharp.Common
             set
             {
                 _width = value;
-                WidthSqr = value*value;
+                WidthSqr = value * value;
             }
         }
 
         /// <summary>
-        ///     Gets the width squared.
+        /// Gets the width squared.
         /// </summary>
         /// <value>The width squared.</value>
         public float WidthSqr { get; private set; }
 
         /// <summary>
-        ///     Gets the spell data instance.
+        /// Gets the spell data instance.
         /// </summary>
         /// <value>The spell data instance.</value>
         public SpellDataInst Instance
@@ -336,7 +306,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets or sets the range.
+        /// Gets or sets the range.
         /// </summary>
         /// <value>The range.</value>
         public float Range
@@ -353,7 +323,7 @@ namespace LeagueSharp.Common
                     return ChargedMinRange +
                            Math.Min(
                                ChargedMaxRange - ChargedMinRange,
-                               (Utils.TickCount - _chargedCastedT)*(ChargedMaxRange - ChargedMinRange)/
+                               (Utils.TickCount - _chargedCastedT) * (ChargedMaxRange - ChargedMinRange) /
                                ChargeDuration - 150);
                 }
 
@@ -363,16 +333,16 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets the range squared.
+        /// Gets the range squared.
         /// </summary>
         /// <value>The range squared.</value>
         public float RangeSqr
         {
-            get { return Range*Range; }
+            get { return Range * Range; }
         }
 
         /// <summary>
-        ///     Gets a value indicating whether this instance is charging a charged spell.
+        /// Gets a value indicating whether this instance is charging a charged spell.
         /// </summary>
         /// <value><c>true</c> if this instance is charging  a charged spell; otherwise, <c>false</c>.</value>
         public bool IsCharging
@@ -388,7 +358,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets the level of the spell.
+        /// Gets the level of the spell.
         /// </summary>
         /// <value>The level of the spell.</value>
         public int Level
@@ -397,71 +367,28 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets or sets from position.
+        /// Gets or sets from position.
         /// </summary>
         /// <value>From position.</value>
         public Vector3 From
         {
-            get { return !_from.To2D().IsValid() ? ObjectManager.Player.ServerPosition : _from; }
+            get { return !_from.LSTo2D().IsValid() ? ObjectManager.Player.ServerPosition : _from; }
             set { _from = value; }
         }
 
         /// <summary>
-        ///     Gets or sets the position to check the range from.
+        /// Gets or sets the position to check the range from.
         /// </summary>
         /// <value>Yhe position to check the range from.</value>
         public Vector3 RangeCheckFrom
         {
-            get { return !_rangeCheckFrom.To2D().IsValid() ? ObjectManager.Player.ServerPosition : _rangeCheckFrom; }
+            get { return !_rangeCheckFrom.LSTo2D().IsValid() ? ObjectManager.Player.ServerPosition : _rangeCheckFrom; }
             set { _rangeCheckFrom = value; }
         }
 
-        /// <summary>
-        ///     Returns the amount of mana the spell costs to cast
-        /// </summary>
-        /// <value>The mana cost.</value>
-        public float ManaCost
-        {
-            get { return ObjectManager.Player.Spellbook.GetSpell(Slot).SData.Mana; }
-        }
 
         /// <summary>
-        ///     Returns the cooldown of the spell.
-        /// </summary>
-        /// <value>The cooldown.</value>
-        public float Cooldown
-        {
-            get
-            {
-                var coolDown = ObjectManager.Player.Spellbook.GetSpell(Slot).CooldownExpires;
-                return Game.Time < coolDown ? coolDown - Game.Time : 0;
-            }
-        }
-
-
-        /// <summary>
-        ///     Allow user to cancel channeling
-        /// </summary>
-        public bool CanBeCanceledByUser { get; set; }
-
-        /// <summary>
-        ///     Is spell type channel
-        /// </summary>
-        public bool IsChannelTypeSpell { get; set; }
-
-        /// <summary>
-        ///     Is spell targettable
-        /// </summary>
-        public bool TargetSpellCancel { get; set; }
-
-        /// <summary>
-        ///     Should the spell  be interuptable by casting other spells
-        /// </summary>
-        public bool LetSpellcancel { get; set; }
-
-
-        /// <summary>
-        ///     Sets spell the be a targetted spell.
+        /// Sets spell the be a targetted spell.
         /// </summary>
         /// <param name="delay">The delay.</param>
         /// <param name="speed">The speed.</param>
@@ -480,7 +407,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Sets the spell to be a skillshot.
+        /// Sets the spell to be a skillshot.
         /// </summary>
         /// <param name="delay">The delay.</param>
         /// <param name="width">The width.</param>
@@ -508,7 +435,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Sets the spell to be a charged spell.
+        /// Sets the spell to be a charged spell.
         /// </summary>
         /// <param name="spellName">Name of the spell.</param>
         /// <param name="buffName">Name of the buff.</param>
@@ -522,16 +449,16 @@ namespace LeagueSharp.Common
             ChargedBuffName = buffName;
             ChargedMinRange = minRange;
             ChargedMaxRange = maxRange;
-            ChargeDuration = (int) (deltaT*1000);
+            ChargeDuration = (int)(deltaT * 1000);
             _chargedCastedT = 0;
 
-            Obj_AI_Base.OnProcessSpellCast += Obj_AI_Hero_OnProcessSpellCast;
+            Obj_AI_Base.OnProcessSpellCast += AIHeroClient_OnProcessSpellCast;
             Spellbook.OnUpdateChargeableSpell += Spellbook_OnUpdateChargedSpell;
             Spellbook.OnCastSpell += SpellbookOnCastSpell;
         }
 
         /// <summary>
-        ///     Start charging the spell if its not charging.
+        /// Start charging the spell if its not charging.
         /// </summary>
         public void StartCharging()
         {
@@ -543,7 +470,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Start charging the spell if its not charging.
+        /// Start charging the spell if its not charging.
         /// </summary>
         /// <param name="position">The position.</param>
         public void StartCharging(Vector3 position)
@@ -556,11 +483,11 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Fired when the charged spell is updated.
+        /// Fired when the charged spell is updated.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="SpellbookUpdateChargedSpellEventArgs" /> instance containing the event data.</param>
-        private void Spellbook_OnUpdateChargedSpell(Spellbook sender, SpellbookUpdateChargeableSpellEventArgs args)
+        /// <param name="args">The <see cref="SpellbookUpdateChargedSpellEventArgs"/> instance containing the event data.</param>
+        void Spellbook_OnUpdateChargedSpell(Spellbook sender, SpellbookUpdateChargeableSpellEventArgs args)
         {
             if (sender.Owner.IsMe && Utils.TickCount - _chargedReqSentT < 3000 && args.ReleaseCast)
             {
@@ -569,10 +496,10 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Fired when the spellbook casts a spell.
+        /// Fired when the spellbook casts a spell.
         /// </summary>
         /// <param name="spellbook">The spellbook.</param>
-        /// <param name="args">The <see cref="SpellbookCastSpellEventArgs" /> instance containing the event data.</param>
+        /// <param name="args">The <see cref="SpellbookCastSpellEventArgs"/> instance containing the event data.</param>
         private void SpellbookOnCastSpell(Spellbook spellbook, SpellbookCastSpellEventArgs args)
         {
             if (args.Slot != Slot)
@@ -580,21 +507,21 @@ namespace LeagueSharp.Common
                 return;
             }
 
-            if (Utils.TickCount - _chargedReqSentT > 500)
+            if ((Utils.TickCount - _chargedReqSentT > 500))
             {
                 if (IsCharging)
                 {
-                    Cast(args.StartPosition.To2D());
+                    Cast(args.StartPosition.LSTo2D());
                 }
             }
         }
 
         /// <summary>
-        ///     Fired when the game processes a spell cast.
+        /// Fired when the game processes a spell cast.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="args">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
-        private void Obj_AI_Hero_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
+        /// <param name="args">The <see cref="GameObjectProcessSpellCastEventArgs"/> instance containing the event data.</param>
+        private void AIHeroClient_OnProcessSpellCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
             if (sender.IsMe && args.SData.Name == ChargedSpellName)
             {
@@ -603,7 +530,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Updates the source position.
+        /// Updates the source position.
         /// </summary>
         /// <param name="from">From.</param>
         /// <param name="rangeCheckFrom">The range check from.</param>
@@ -614,7 +541,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets the prediction.
+        /// Gets the prediction.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <param name="aoe">if set to <c>true</c>, the prediction will try to hit as many enemies.</param>
@@ -633,18 +560,18 @@ namespace LeagueSharp.Common
                         Radius = Width,
                         Speed = Speed,
                         From = From,
-                        Range = overrideRange > 0 ? overrideRange : Range,
+                        Range = (overrideRange > 0) ? overrideRange : Range,
                         Collision = Collision,
                         Type = Type,
                         RangeCheckFrom = RangeCheckFrom,
                         Aoe = aoe,
                         CollisionObjects =
-                            collisionable ?? new[] {CollisionableObjects.Heroes, CollisionableObjects.Minions}
+                            collisionable ?? new[] { CollisionableObjects.Heroes, CollisionableObjects.Minions }
                     });
         }
 
         /// <summary>
-        ///     Gets the collision.
+        /// Gets the collision.
         /// </summary>
         /// <param name="from">From.</param>
         /// <param name="to">To.</param>
@@ -665,7 +592,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets the hit count.
+        /// Gets the hit count.
         /// </summary>
         /// <param name="hitChance">The hit chance.</param>
         /// <returns>System.Single.</returns>
@@ -675,7 +602,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Casts the spell at the specified unit.
+        /// Casts the spell at the specified unit.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <param name="packetCast">if set to <c>true</c> [packet cast].</param>
@@ -689,7 +616,7 @@ namespace LeagueSharp.Common
             bool exactHitChance = false,
             int minTargets = -1)
         {
-            if (unit == null || MenuGUI.IsChatOpen)
+            if (unit == null || Shop.IsOpen || MenuGUI.IsChatOpen)
             {
                 return CastStates.NotCasted;
             }
@@ -709,7 +636,7 @@ namespace LeagueSharp.Common
             if (!IsSkillshot)
             {
                 //Target out of range
-                if (RangeCheckFrom.Distance(unit.ServerPosition, true) > RangeSqr)
+                if (RangeCheckFrom.LSDistance(unit.ServerPosition, true) > RangeSqr)
                 {
                     return CastStates.OutOfRange;
                 }
@@ -751,7 +678,7 @@ namespace LeagueSharp.Common
             }
 
             //Target out of range.
-            if (RangeCheckFrom.Distance(prediction.CastPosition, true) > RangeSqr)
+            if (RangeCheckFrom.LSDistance(prediction.CastPosition, true) > RangeSqr)
             {
                 return CastStates.OutOfRange;
             }
@@ -792,19 +719,19 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Casts the targetted spell on the unit.
+        /// Casts the targetted spell on the unit.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <param name="packetCast">if set to <c>true</c> [packet cast].</param>
         /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public bool CastOnUnit(Obj_AI_Base unit, bool packetCast = false)
         {
-            if (!Slot.IsReady() || From.Distance(unit.ServerPosition, true) > RangeSqr)
+            if (!Slot.IsReady() || From.LSDistance(unit.ServerPosition, true) > RangeSqr)
             {
                 return false;
             }
 
-            if (MenuGUI.IsChatOpen)
+            if (Shop.IsOpen || MenuGUI.IsChatOpen)
             {
                 return false;
             }
@@ -815,11 +742,14 @@ namespace LeagueSharp.Common
             {
                 return ObjectManager.Player.Spellbook.CastSpell(Slot, unit, false);
             }
-            return ObjectManager.Player.Spellbook.CastSpell(Slot, unit);
+            else
+            {
+                return ObjectManager.Player.Spellbook.CastSpell(Slot, unit);
+            }
         }
 
         /// <summary>
-        ///     Casts the spell to the unit using the prediction if its an skillshot.
+        /// Casts the spell to the unit using the prediction if its an skillshot.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <param name="packetCast">if set to <c>true</c>, uses packets to cast the spell.</param>
@@ -831,7 +761,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Casts the spell on the player.
+        /// Casts the spell on the player.
         /// </summary>
         /// <param name="packetCast">if set to <c>true</c> uses packets to cast the spell.</param>
         /// <returns><c>true</c> if the spell was casted sucessfully, <c>false</c> otherwise.</returns>
@@ -841,7 +771,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Casts the spell from a position to a position.
+        /// Casts the spell from a position to a position.
         /// </summary>
         /// <param name="fromPosition">From position.</param>
         /// <param name="toPosition">To position.</param>
@@ -852,14 +782,14 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Casts the spell from a position to a position.
+        /// Casts the spell from a position to a position.
         /// </summary>
         /// <param name="fromPosition">From position.</param>
         /// <param name="toPosition">To position.</param>
         /// <returns><c>true</c> if the spell was sucessfully casted, <c>false</c> otherwise.</returns>
         public bool Cast(Vector3 fromPosition, Vector3 toPosition)
         {
-            if (MenuGUI.IsChatOpen)
+            if (Shop.IsOpen || MenuGUI.IsChatOpen)
             {
                 return false;
             }
@@ -867,14 +797,14 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Casts the spell to the position.
+        /// Casts the spell to the position.
         /// </summary>
         /// <param name="position">The position.</param>
         /// <param name="packetCast">if set to <c>true</c> uses packets to cast the spell</param>
         /// <returns><c>true</c> if the spell was casted successfully, <c>false</c> otherwise.</returns>
         public bool Cast(Vector2 position, bool packetCast = false)
         {
-            if (MenuGUI.IsChatOpen)
+            if (Shop.IsOpen || MenuGUI.IsChatOpen)
             {
                 return false;
             }
@@ -882,7 +812,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Casts the spell to the position.
+        /// Casts the spell to the position.
         /// </summary>
         /// <param name="position">The position.</param>
         /// <param name="packetCast">if set to <c>true</c> uses packets to cast the spell.</param>
@@ -932,7 +862,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Shoots the charged spell.
+        /// Shoots the charged spell.
         /// </summary>
         /// <param name="slot">The slot.</param>
         /// <param name="position">The position.</param>
@@ -945,7 +875,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Casts the spell if the hitchance equals the set hitchance.
+        /// Casts the spell if the hitchance equals the set hitchance.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <param name="hitChance">The hit chance.</param>
@@ -955,13 +885,13 @@ namespace LeagueSharp.Common
         {
             var currentHitchance = MinHitChance;
             MinHitChance = hitChance;
-            var castResult = _cast(unit, packetCast);
+            var castResult = _cast(unit, packetCast, false, false);
             MinHitChance = currentHitchance;
             return castResult == CastStates.SuccessfullyCasted;
         }
 
         /// <summary>
-        ///     Casts the spell if it will hit the set targets.
+        /// Casts the spell if it will hit the set targets.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <param name="minTargets">The minimum targets.</param>
@@ -974,18 +904,18 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Returns the unit health when the spell hits the unit.
+        /// Returns the unit health when the spell hits the unit.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <returns>System.Single.</returns>
         public float GetHealthPrediction(Obj_AI_Base unit)
         {
-            var time = (int) (Delay*1000 + From.Distance(unit.ServerPosition)/Speed - 100);
+            var time = (int)(Delay * 1000 + From.LSDistance(unit.ServerPosition) / Speed - 100);
             return HealthPrediction.GetHealthPrediction(unit, time);
         }
 
         /// <summary>
-        ///     Gets the circular farm location.
+        /// Gets the circular farm location.
         /// </summary>
         /// <param name="minionPositions">The minion positions.</param>
         /// <param name="overrideWidth">Width of the override.</param>
@@ -1000,7 +930,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets the circular farm location.
+        /// Gets the circular farm location.
         /// </summary>
         /// <param name="minionPositions">The minion positions.</param>
         /// <param name="overrideWidth">Width of the override.</param>
@@ -1013,7 +943,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets the line farm location.
+        /// Gets the line farm location.
         /// </summary>
         /// <param name="minionPositions">The minion positions.</param>
         /// <param name="overrideWidth">Width of the override.</param>
@@ -1028,7 +958,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets the line farm location.
+        /// Gets the line farm location.
         /// </summary>
         /// <param name="minionPositions">The minion positions.</param>
         /// <param name="overrideWidth">Width of the override.</param>
@@ -1040,7 +970,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Counts the hits.
+        /// Counts the hits.
         /// </summary>
         /// <param name="units">The units.</param>
         /// <param name="castPosition">The cast position.</param>
@@ -1052,7 +982,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Counts the hits.
+        /// Counts the hits.
         /// </summary>
         /// <param name="points">The points.</param>
         /// <param name="castPosition">The cast position.</param>
@@ -1063,19 +993,41 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Gets the damage that the skillshot will deal to the target using the damage library.
+        /// Gets the damage that the skillshot will deal to the target using the damage library.
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="stage">The stage.</param>
         /// <returns>System.Single.</returns>
         public float GetDamage(Obj_AI_Base target, int stage = 0)
         {
-            return (float) ObjectManager.Player.LSGetSpellDamage(target, Slot, stage);
+            return (float)ObjectManager.Player.LSGetSpellDamage(target, Slot, stage);
         }
 
         /// <summary>
-        ///     Gets the damage that the skillshot will deal to the target using the damage lib and returns if the target is
-        ///     killable or not.
+        /// Returns the amount of mana the spell costs to cast
+        /// </summary>
+        /// <value>The mana cost.</value>
+        public float ManaCost
+        {
+            get { return ObjectManager.Player.Spellbook.GetSpell(Slot).SData.Mana; }
+        }
+
+        /// <summary>
+        /// Returns the cooldown of the spell.
+        /// </summary>
+        /// <value>The cooldown.</value>
+        public float Cooldown
+        {
+            get
+            {
+                var coolDown = ObjectManager.Player.Spellbook.GetSpell(Slot).CooldownExpires;
+                return Game.Time < coolDown ? coolDown - Game.Time : 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the damage that the skillshot will deal to the target using the damage lib and returns if the target is
+        /// killable or not.
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="stage">The stage.</param>
@@ -1086,7 +1038,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Returns if the spell will hit the unit when casted on castPosition.
+        /// Returns if the spell will hit the unit when casted on castPosition.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <param name="castPosition">The cast position.</param>
@@ -1104,7 +1056,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Returns if the spell will hit the point when casted on castPosition.
+        /// Returns if the spell will hit the point when casted on castPosition.
         /// </summary>
         /// <param name="point">The point.</param>
         /// <param name="castPosition">The cast position.</param>
@@ -1115,25 +1067,25 @@ namespace LeagueSharp.Common
             switch (Type)
             {
                 case SkillshotType.SkillshotCircle:
-                    if (point.To2D().Distance(castPosition, true) < WidthSqr)
+                    if (point.LSTo2D().LSDistance(castPosition, true) < WidthSqr)
                     {
                         return true;
                     }
                     break;
 
                 case SkillshotType.SkillshotLine:
-                    if (point.To2D().Distance(castPosition.To2D(), From.To2D(), true, true) <
+                    if (point.LSTo2D().LSDistance(castPosition.LSTo2D(), From.LSTo2D(), true, true) <
                         Math.Pow(Width + extraWidth, 2))
                     {
                         return true;
                     }
                     break;
                 case SkillshotType.SkillshotCone:
-                    var edge1 = (castPosition.To2D() - From.To2D()).Rotated(-Width/2);
-                    var edge2 = edge1.Rotated(Width);
-                    var v = point.To2D() - From.To2D();
-                    if (point.To2D().Distance(From, true) < RangeSqr && edge1.CrossProduct(v) > 0 &&
-                        v.CrossProduct(edge2) > 0)
+                    var edge1 = (castPosition.LSTo2D() - From.LSTo2D()).LSRotated(-Width / 2);
+                    var edge2 = edge1.LSRotated(Width);
+                    var v = point.LSTo2D() - From.LSTo2D();
+                    if (point.LSTo2D().LSDistance(From, true) < RangeSqr && edge1.LSCrossProduct(v) > 0 &&
+                        v.LSCrossProduct(edge2) > 0)
                     {
                         return true;
                     }
@@ -1144,17 +1096,17 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Returns if a spell can be cast and the target is in range.
+        /// Returns if a spell can be cast and the target is in range.
         /// </summary>
         /// <param name="unit">The unit.</param>
         /// <returns><c>true</c> if this instance can cast on the specified unit; otherwise, <c>false</c>.</returns>
         public bool CanCast(Obj_AI_Base unit)
         {
-            return Slot.IsReady() && unit.IsValidTarget(Range);
+            return Slot.IsReady() && unit.LSIsValidTarget(Range);
         }
 
         /// <summary>
-        ///     Returns if the GameObject is in range of the spell.
+        /// Returns if the GameObject is in range of the spell.
         /// </summary>
         /// <param name="obj">The object.</param>
         /// <param name="range">The range.</param>
@@ -1162,46 +1114,46 @@ namespace LeagueSharp.Common
         public bool IsInRange(GameObject obj, float range = -1)
         {
             return IsInRange(
-                obj is Obj_AI_Base ? (obj as Obj_AI_Base).ServerPosition.To2D() : obj.Position.To2D(), range);
+                obj is Obj_AI_Base ? (obj as Obj_AI_Base).ServerPosition.LSTo2D() : obj.Position.LSTo2D(), range);
         }
 
         /// <summary>
-        ///     Returns if the position is in range of the spell.
+        /// Returns if the position is in range of the spell.
         /// </summary>
         /// <param name="point">The point.</param>
         /// <param name="range">The range.</param>
         /// <returns><c>true</c> if the specified location is in range of the spell; otherwise, <c>false</c>.</returns>
         public bool IsInRange(Vector3 point, float range = -1)
         {
-            return IsInRange(point.To2D(), range);
+            return IsInRange(point.LSTo2D(), range);
         }
 
         /// <summary>
-        ///     Returns if the Vector2 is in range of the spell.
+        /// Returns if the Vector2 is in range of the spell.
         /// </summary>
         /// <param name="point">The point.</param>
         /// <param name="range">The range.</param>
         /// <returns><c>true</c> if the specified location is in range of the spell; otherwise, <c>false</c>.</returns>
         public bool IsInRange(Vector2 point, float range = -1)
         {
-            return RangeCheckFrom.To2D().Distance(point, true) < (range < 0 ? RangeSqr : range*range);
+            return RangeCheckFrom.LSTo2D().LSDistance(point, true) < (range < 0 ? RangeSqr : range * range);
         }
 
         /// <summary>
-        ///     Returns the best target found using the current TargetSelector mode.
-        ///     Please make sure to set the Spell.DamageType Property to the type of damage this spell does (if not done on
-        ///     initialization).
+        /// Returns the best target found using the current TargetSelector mode.
+        /// Please make sure to set the Spell.DamageType Property to the type of damage this spell does (if not done on
+        /// initialization).
         /// </summary>
         /// <param name="extraRange">The extra range.</param>
         /// <param name="champsToIgnore">The champs to ignore.</param>
-        /// <returns>Obj_AI_Hero.</returns>
+        /// <returns>AIHeroClient.</returns>
         public AIHeroClient GetTarget(float extraRange = 0, IEnumerable<AIHeroClient> champsToIgnore = null)
         {
             return TargetSelector.GetTarget(Range + extraRange, DamageType);
         }
 
         /// <summary>
-        ///     Spell will be casted on the best target found with the Spell.GetTarget method.
+        /// Spell will be casted on the best target found with the Spell.GetTarget method.
         /// </summary>
         /// <param name="extraRange">The extra range.</param>
         /// <param name="packetCast">if set to <c>true</c>, casts the spell with packets..</param>
@@ -1209,7 +1161,7 @@ namespace LeagueSharp.Common
         /// <returns>CastStates.</returns>
         public CastStates CastOnBestTarget(float extraRange = 0, bool packetCast = false, bool aoe = false)
         {
-            if (MenuGUI.IsChatOpen)
+            if (Shop.IsOpen || MenuGUI.IsChatOpen)
             {
                 return CastStates.NotCasted;
             }
@@ -1220,7 +1172,38 @@ namespace LeagueSharp.Common
 
 
         /// <summary>
-        ///     Spell setings
+        /// Allow user to cancel channeling
+        /// </summary>
+        public bool CanBeCanceledByUser { get; set; }
+
+        /// <summary>
+        /// check if the spell is being channeled
+        /// </summary>
+        public bool IsChanneling = false;
+
+        /// <summary>
+        /// Is spell type channel
+        /// </summary>
+        public bool IsChannelTypeSpell { get; set; }
+
+        /// <summary>
+        /// Is spell targettable
+        /// </summary>
+        public bool TargetSpellCancel { get; set; }
+
+        /// <summary>
+        /// Should the spell  be interuptable by casting other spells
+        /// </summary>
+        public bool LetSpellcancel { get; set; }
+
+        /// <summary>
+        /// Last time casting has been issued
+        /// </summary>
+        private int _cancelSpellIssue;
+
+
+        /// <summary>
+        /// Spell setings
         /// </summary>
         /// <param name="letUserCancel"></param>
         /// <param name="targetted"></param>
@@ -1236,7 +1219,7 @@ namespace LeagueSharp.Common
             Obj_AI_Base.OnSpellCast += OnDoCast;
             GameObject.OnDelete += OnDelete;
             Game.OnWndProc += OnWndProc;
-            Player.OnIssueOrder += OnOrder;
+            EloBuddy.Player.OnIssueOrder += OnOrder;
             Spellbook.OnCastSpell += OnCastSpell;
 
             if (ObjectManager.Player.ChampionName == "Fiddlesticks")
@@ -1244,6 +1227,26 @@ namespace LeagueSharp.Common
                 GameObject.OnCreate += OnCreate;
             }
         }
+
+        /// <summary>
+        /// Diffrenet spell process names
+        /// </summary>
+        private readonly string[] _processName =
+        {
+            "DrainChannel", "KatarinaR", "Crowstorm",
+            "GalioIdolOfDurand", "AlZaharNetherGrasp",
+            "ReapTheWhirlwind"
+        };
+
+        /// <summary>
+        /// Diffrenet object names
+        /// </summary>
+        private readonly string[] _deleteObject =
+        {
+            "Fiddlesticks_Base_Drain.troy", "katarina_deathLotus_tar.troy",
+            "Galio_Base_R_explo.troy", "Malzahar_Base_R_Beam.troy",
+            "ReapTheWhirlwind_green_cas.troy",
+        };
 
 
         private void OnCreate(GameObject sender, EventArgs args)
@@ -1255,7 +1258,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Check when the skill object has been casted
+        /// Check when the skill object has been casted
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -1270,7 +1273,7 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     Check when an object has been deleted
+        /// Check when an object has been deleted
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -1284,6 +1287,7 @@ namespace LeagueSharp.Common
 
         private void OnCastSpell(Spellbook sender, SpellbookCastSpellEventArgs args)
         {
+
             if (LetSpellcancel) return;
 
             args.Process = !IsChanneling;
@@ -1309,7 +1313,7 @@ namespace LeagueSharp.Common
 
 
         /// <summary>
-        ///     Check when a spell has been casted
+        /// Check when a spell has been casted
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
@@ -1327,23 +1331,18 @@ namespace LeagueSharp.Common
         }
 
         /// <summary>
-        ///     When player sends a key command
+        /// When player sends a key command
         /// </summary>
         /// <param name="args"></param>
         private void OnWndProc(WndEventArgs args)
         {
+
             if (!CanBeCanceledByUser) return;
 
             if (args.Msg == 517)
             {
                 IsChanneling = false;
             }
-        }
-
-        internal bool LastCastedDelay(int p)
-        {
-            var casted = ObjectManager.Player.LastCastedspell();
-            return casted != null && casted.Name == Instance.Name && Utils.TickCount - casted.Tick < p;
         }
     }
 }

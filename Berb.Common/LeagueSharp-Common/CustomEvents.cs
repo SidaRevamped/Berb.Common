@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EloBuddy;
-using EloBuddy.SDK.Events;
+//using EloBuddy.SDK.Events;
 
 #endregion
 
@@ -217,7 +217,7 @@ namespace LeagueSharp.Common
                 EloBuddy.Game.OnProcessPacket += PacketHandler;
 
                 //Initializes ondash class:
-                ObjectManager.Player.IsDashing();
+                ObjectManager.Player.LSIsDashing();
             }
 
             /// <summary>
