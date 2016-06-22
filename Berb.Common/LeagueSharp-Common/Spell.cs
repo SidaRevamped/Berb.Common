@@ -167,6 +167,7 @@ namespace LeagueSharp.Common
         /// <param name="useSpellDbValues">Doesn't matter if it's true or false, using this override will automatically use SpellDb Values.</param>
         public Spell(SpellSlot slot, bool useSpellDbValues)
         {
+            Slot = slot;
             var spellData = SpellDatabase.GetBySpellSlot(slot, ObjectManager.Player.CharData.BaseSkinName);
             // Charged Spell:
             if (spellData.ChargedSpellName != "")
@@ -211,6 +212,7 @@ namespace LeagueSharp.Common
             Range = spellData.Range;
             Delay = spellData.Delay;
             Speed = spellData.MissileSpeed;
+            IsSkillshot = false;
         }
 
 

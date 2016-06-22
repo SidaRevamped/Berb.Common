@@ -85,6 +85,7 @@ namespace LeagueSharp.SDK
 
         public Spell(SpellSlot slot)
         {
+            Slot = slot;
             var spellData = SpellDatabase.GetBySpellSlot(slot, ObjectManager.Player.CharData.BaseSkinName);
 
             if (spellData == null)

@@ -131,6 +131,7 @@ namespace LeagueSharp.SDK
             {
                 return new Spell
                 {
+                    Slot = slot,
                     ChargedBuffName = spellData.ChargedBuffName,
                     ChargedMaxRange = spellData.ChargedMaxRange,
                     ChargedMinRange = spellData.ChargedMinRange,
@@ -155,6 +156,7 @@ namespace LeagueSharp.SDK
             {
                 return new Spell
                 {
+                    Slot = slot,
                     Delay = spellData.Delay,
                     Range = spellData.Range,
                     Width =
@@ -170,7 +172,7 @@ namespace LeagueSharp.SDK
                 };
             }
             // Targeted:
-            return new Spell { Range = spellData.Range, Delay = spellData.Delay, Speed = spellData.MissileSpeed };
+            return new Spell { Range = spellData.Range, Delay = spellData.Delay, Speed = spellData.MissileSpeed, Slot = slot };
         }
 
         /// <summary>
