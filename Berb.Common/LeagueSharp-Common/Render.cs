@@ -217,9 +217,13 @@ namespace LeagueSharp.Common
                     {
                         _renderVisibleObjects =
                             RenderObjects.Where(obj => obj.Visible && obj.HasValidLayer())
-                                .OrderBy(obj => obj.Layer)
-                                .ToList();
+                                    .OrderBy(obj => obj.Layer)
+                                    .ToList();
                     }
+                }
+                catch (ThreadAbortException)
+                {
+                    // ignored
                 }
                 catch (Exception e)
                 {
