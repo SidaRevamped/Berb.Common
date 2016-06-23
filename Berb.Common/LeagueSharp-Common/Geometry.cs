@@ -674,7 +674,7 @@ namespace LeagueSharp.Common
         /// </summary>
         /// <param name="path">The path.</param>
         /// <returns></returns>
-        public static float PathLength(this List<Vector2> path)
+        public static float LSPathLength(this List<Vector2> path)
         {
             var distance = 0f;
             for (var i = 0; i < path.Count - 1; i++)
