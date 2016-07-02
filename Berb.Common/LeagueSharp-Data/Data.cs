@@ -26,7 +26,6 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         public static T Get<T>() where T : IDataType
         {
             try
