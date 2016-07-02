@@ -79,6 +79,7 @@
     <Compile Include="LeagueSharp-Common\Config.cs" />
     <Compile Include="LeagueSharp-Common\Cursor.cs" />
     <Compile Include="LeagueSharp-Common\CustomEvents.cs" />
+    <Compile Include="LeagueSharp-Common\CustomizableAntiGapcloser.cs" />
     <Compile Include="LeagueSharp-Common\Damage.cs" />
     <Compile Include="LeagueSharp-Common\Dash.cs" />
     <Compile Include="LeagueSharp-Common\Data\SpellDatabase.cs" />
