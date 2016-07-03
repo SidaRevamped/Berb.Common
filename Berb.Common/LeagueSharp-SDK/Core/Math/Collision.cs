@@ -120,7 +120,7 @@ namespace LeagueSharp.SDK
                                 minion.LSIsValidTarget(
                                     Math.Min(input.Range + input.Radius + 100, 2000),
                                     true,
-                                    input.RangeCheckFrom) && IsHitCollision(minion, input, position, 20)));
+                                    input.RangeCheckFrom) && IsHitCollision(minion, input, position, 15)));
                 }
 
                 if (input.CollisionObjects.HasFlag(CollisionableObjects.Heroes))
@@ -159,7 +159,7 @@ namespace LeagueSharp.SDK
                     for (var i = 0; i < yasuoWallPoly.Points.Count; i++)
                     {
                         var inter =
-                            yasuoWallPoly.Points[i].Intersection(
+                            yasuoWallPoly.Points[i].LSIntersection(
                                 yasuoWallPoly.Points[i != yasuoWallPoly.Points.Count - 1 ? i + 1 : 0],
                                 input.From.ToVector2(),
                                 position.ToVector2());
@@ -194,13 +194,13 @@ namespace LeagueSharp.SDK
             }
 
             inputSub.Unit = collision;
-            var radius = inputSub.Radius + inputSub.Unit.BoundingRadius;
+            var radius = inputSub.Unit.BoundingRadius;
             var predPos = Movement.GetPrediction(inputSub, false, false).UnitPosition.ToVector2();
 
             return (collision is Obj_AI_Minion
-                    && (predPos.Distance(inputSub.From) < radius || predPos.Distance(pos) < radius))
+                    && (predPos.Distance(inputSub.From) < 10 + radius || predPos.Distance(pos) < radius))
                    || predPos.DistanceSquared(inputSub.From.ToVector2(), pos.ToVector2(), true)
-                   <= Math.Pow(radius + extraRadius, 2);
+                   <= Math.Pow(inputSub.Radius + radius + extraRadius, 2);
         }
 
         #endregion

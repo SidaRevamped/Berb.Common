@@ -326,7 +326,7 @@ using EloBuddy; using Enumerations;
         /// <param name="lineSegment2Start">Line Segment 2 (Start)></param>
         /// <param name="lineSegment2End">Line Segment 2 (End)</param>
         /// <returns>The intersection result, <seealso cref="IntersectionResult" /></returns>
-        public static IntersectionResult Intersection(
+        public static IntersectionResult LSIntersection(
             this Vector2 lineSegment1Start,
             Vector2 lineSegment1End,
             Vector2 lineSegment2Start,
