@@ -57,7 +57,7 @@ namespace LeagueSharp.Common
         /// <param name="args">The <see cref="GameObjectNewPathEventArgs" /> instance containing the event data.</param>
         private static void ObjAiHeroOnOnNewPath(Obj_AI_Base sender, GameObjectNewPathEventArgs args)
         {
-            if (sender.IsValid<AIHeroClient>())
+            if (sender.IsValid<AIHeroClient>() && sender.IsVisible && sender.IsHPBarRendered)
             {
                 if (!DetectedDashes.ContainsKey(sender.NetworkId))
                 {
