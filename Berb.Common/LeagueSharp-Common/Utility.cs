@@ -395,37 +395,7 @@ namespace LeagueSharp.Common
         /// </summary>
         public static List<Vector2> GetWaypoints(this Obj_AI_Base unit)
         {
-            var result = new List<Vector2>();
-
-            if (unit.IsVisible)
-            {
-                result.Add(unit.ServerPosition.LSTo2D());
-                var path = unit.Path;
-                if (path.Length > 0)
-                {
-                    var first = path[0].LSTo2D();
-                    if (first.LSDistance(result[0], true) > 40)
-                    {
-                        result.Add(first);
-                    }
-
-                    for (var i = 1; i < path.Length; i++)
-                    {
-                        result.Add(path[i].LSTo2D());
-                    }
-                }
-            }
-            else if (WaypointTracker.StoredPaths.ContainsKey(unit.NetworkId))
-            {
-                var path = WaypointTracker.StoredPaths[unit.NetworkId];
-                var timePassed = (Utils.TickCount - WaypointTracker.StoredTick[unit.NetworkId]) / 1000f;
-                if (path.LSPathLength() >= unit.MoveSpeed * timePassed)
-                {
-                    result = CutPath(path, (int)(unit.MoveSpeed * timePassed));
-                }
-            }
-
-            return result;
+            return unit.Path.ToList().LSTo2D();
         }
 
         public static List<Vector2Time> GetWaypointsWithTime(this Obj_AI_Base unit)
