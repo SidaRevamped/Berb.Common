@@ -616,7 +616,7 @@ namespace LeagueSharp.Common
             bool exactHitChance = false,
             int minTargets = -1)
         {
-            if (unit == null || Shop.IsOpen || MenuGUI.IsChatOpen)
+            if (unit == null || Shop.IsOpen || MenuGUI.IsChatOpen || !unit.IsVisible || !unit.IsHPBarRendered)
             {
                 return CastStates.NotCasted;
             }

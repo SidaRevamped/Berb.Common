@@ -448,7 +448,7 @@ namespace LeagueSharp.SDK
             int minTargets = -1,
             Enumerations.HitChance tempHitChance = Enumerations.HitChance.None)
         {
-            if (!unit.LSIsValid())
+            if (!unit.LSIsValid() || !unit.IsVisible || !unit.IsHPBarRendered)
             {
                 return CastStates.InvalidTarget;
             }

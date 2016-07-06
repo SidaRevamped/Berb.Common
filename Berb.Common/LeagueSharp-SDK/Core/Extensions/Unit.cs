@@ -465,8 +465,7 @@ namespace LeagueSharp.SDK
             bool checkTeam = true,
             Vector3 from = default(Vector3))
         {
-            if (unit == null || !unit.IsValid || !unit.IsVisible || unit.IsDead || !unit.IsTargetable
-                || unit.IsInvulnerable || unit.IsZombie)
+            if (unit == null || !unit.IsValid || !unit.IsVisible || unit.IsDead || !unit.IsTargetable || unit.IsInvulnerable || unit.IsZombie)
             {
                 return false;
             }
