@@ -6,12 +6,11 @@
     using System.Text;
     using EloBuddy;
     using LeagueSharp.Data.Enumerations;
-    using PortAIO.Properties;
     using LeagueSharp.Data.Utility.Resources;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-
+    using Berb.Common.Properties;
     /// <summary>
     ///     Gets damages. Only loads damages for champions in the game.
     /// </summary>
@@ -26,7 +25,7 @@
         /// </summary>
         internal static readonly IDictionary<string, byte[]> DamageFiles = new Dictionary<string, byte[]>
         {
-            {"6.8", Resources._6_8}
+                                                                                  { "6.11", Resources._6_11 }
         };
 
         #endregion

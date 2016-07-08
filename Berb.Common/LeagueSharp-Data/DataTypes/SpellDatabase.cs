@@ -11,7 +11,6 @@
     ///     Gets data on spells.
     /// </summary>
     /// <seealso cref="IDataType" />
-    [ResourceImport]
     public class SpellDatabase : DataType<SpellDatabase>
     {
         #region Static Fields

@@ -31,10 +31,10 @@ namespace LeagueSharp.SDK.Core.UI.IMenu.Skins.Blue2
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy; using Enumerations;
-    using PortAIO.Properties;
+    using EloBuddy;
+    using Enumerations;
     using SharpDX.Direct3D9;
-
+    using Berb.Common.Properties;
     internal enum BlueTexture2
     {
         Dragging,

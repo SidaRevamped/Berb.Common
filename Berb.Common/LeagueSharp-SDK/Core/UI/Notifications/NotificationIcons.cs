@@ -20,15 +20,15 @@ namespace LeagueSharp.SDK
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
-    using PortAIO.Properties;
     using EloBuddy.SDK.Enumerations;
     using EloBuddy.SDK.Events;
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy; using Enumerations;
+    using EloBuddy;
+    using Enumerations;
     using SharpDX.Direct3D9;
-
+    using Berb.Common.Properties;
     /// <summary>
     ///     The notification icons.
     /// </summary>

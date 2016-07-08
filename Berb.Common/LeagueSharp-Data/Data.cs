@@ -5,9 +5,7 @@
     using System.Security.Permissions;
 
     using LeagueSharp.Data.Utility.Resources;
-    using System.IO;
-    using System.Reflection;
-    using System.Text;
+
     public class Data
     {
         #region Static Fields
@@ -26,7 +24,7 @@
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
+        
         public static T Get<T>() where T : IDataType
         {
             try
@@ -53,14 +51,6 @@
 
         #endregion
     }
-
-    /// <summary>
-    ///     Represents that a class has data that can be obtained from LeagueSharp.Data
-    /// </summary>
-    public abstract class DataType
-    {
-    }
-
 
     /// <summary>
     ///     Represents that a class has data that can be obtained from LeagueSharp.Data

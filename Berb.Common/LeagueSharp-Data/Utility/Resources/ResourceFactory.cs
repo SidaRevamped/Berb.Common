@@ -22,7 +22,6 @@
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="Exception"></exception>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         public static byte[] ByteResource(string file, Assembly assembly = null)
         {
             if (file == null)
@@ -38,7 +37,7 @@
             var resourceFile = assembly.GetManifestResourceNames().FirstOrDefault(f => f.EndsWith(file));
             if (resourceFile == null)
             {
-                throw new Exception($"{nameof(resourceFile)} Embedded Resource not found");
+                throw new Exception($"{(file)} Embedded Resource not found");
             }
 
             using (var ms = new MemoryStream())
@@ -55,7 +54,6 @@
         /// <param name="assembly">The assembly.</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         public static string StringResource(string file, Assembly assembly = null)
         {
             if (file == null)

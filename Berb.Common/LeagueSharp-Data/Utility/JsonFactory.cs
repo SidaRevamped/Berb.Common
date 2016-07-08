@@ -111,7 +111,6 @@
         /// <param name="assembly"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
-        [PermissionSet(SecurityAction.Assert, Unrestricted = true)]
         public static object JsonResource(
             string file,
             Type type = null,

@@ -4,15 +4,15 @@
     using System.Linq;
 
     using LeagueSharp.Data.Utility.Resources;
-    using EloBuddy;
-    using SharpDX;
 
+    using SharpDX;
+    using EloBuddy;
     /// <summary>
     ///     Gets data for flash juke locations.
     /// </summary>
-    /// <seealso cref="LeagueSharp.Data.DataType" />
+    /// <seealso cref="IDataType" />
     [ResourceImport]
-    public class FlashJukeData : DataType
+    public class FlashJukeData : DataType<FlashJukeData>
     {
         #region Static Fields
 

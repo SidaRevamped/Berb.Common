@@ -25,9 +25,9 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy; using Enumerations;
+    using EloBuddy;
+    using Enumerations;
     using LeagueSharp.SDK.Core.Utils;
-    using PortAIO.Properties;
 
     using SharpDX;
     using SharpDX.Direct3D9;
@@ -35,9 +35,9 @@ namespace LeagueSharp.SDK
     using Color = SharpDX.Color;
     using Font = SharpDX.Direct3D9.Font;
     using Enumerations;
-    /// <summary>
-    ///     The notification.
-    /// </summary>
+    using Berb.Common.Properties;    /// <summary>
+                                     ///     The notification.
+                                     /// </summary>
     public class Notification : ANotification
     {
         #region Constants
