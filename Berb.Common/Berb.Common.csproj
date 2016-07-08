@@ -106,6 +106,7 @@
     <Compile Include="LeagueSharp-Common\Render.cs" />
     <Compile Include="LeagueSharp-Common\Spell.cs" />
     <Compile Include="LeagueSharp-Common\StringList.cs" />
+    <Compile Include="LeagueSharp-Common\TargetSelector.cs" />
     <Compile Include="LeagueSharp-Common\Utility.cs" />
     <Compile Include="LeagueSharp-Common\Utils.cs" />
     <Compile Include="LeagueSharp-Common\WeightedRandom.cs" />

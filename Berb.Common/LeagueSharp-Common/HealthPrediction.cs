@@ -153,6 +153,7 @@ namespace LeagueSharp.Common
         /// <returns></returns>
         public static float GetHealthPrediction(Obj_AI_Base unit, int time, int delay = 70)
         {
+            return EloBuddy.SDK.Prediction.Health.GetPrediction(unit, time);
             var predictedDamage = 0f;
 
             foreach (var attack in ActiveAttacks.Values)
@@ -186,6 +187,7 @@ namespace LeagueSharp.Common
         /// <returns></returns>
         public static float LaneClearHealthPrediction(Obj_AI_Base unit, int time, int delay = 70)
         {
+            return EloBuddy.SDK.Prediction.Health.GetPrediction(unit, time);
             var predictedDamage = 0f;
 
             foreach (var attack in ActiveAttacks.Values)
