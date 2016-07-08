@@ -22,10 +22,10 @@
 
 #region
 
+using EloBuddy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EloBuddy;
 
 #endregion
 
@@ -98,6 +98,7 @@ namespace LeagueSharp.Common
     /// <summary>
     ///     This class allows you to easily interrupt interruptable spells like Katarina's ult.
     /// </summary>
+    [Obsolete("Use Interrupter2", false)]
     public static class Interrupter
     {
         /// <summary>
@@ -399,9 +400,20 @@ namespace LeagueSharp.Common
 
             #endregion
 
+            Initialize();
+        }
+
+        public static void Initialize()
+        {
             Game.OnUpdate += Game_OnGameUpdate;
         }
 
+        public static void Shutdown()
+        {
+            Game.OnUpdate -= Game_OnGameUpdate;
+        }
+
+        [Obsolete("Use Interrupter2.OnInterruptableTarget", false)]
         public static event OnPossibleToInterruptH OnPossibleToInterrupt;
 
         /// <summary>
