@@ -453,6 +453,10 @@ namespace LeagueSharp.Common
         /// <returns><c>true</c> if this instance can attack; otherwise, <c>false</c>.</returns>
         public static bool CanAttack()
         {
+            if (Orbwalker._config["method"].Cast<ComboBox>().CurrentValue == 1)
+            {
+                return EloBuddy.SDK.Orbwalker.CanAutoAttack;
+            }
             var extraAttackDelay = 0f;
             if (ObjectManager.Player.ChampionName.Equals("Graves"))
             {
@@ -932,6 +936,7 @@ namespace LeagueSharp.Common
                 _config.Add("Orbwalk", new KeyBind("Combo", false, KeyBind.BindTypes.HoldActive, 32));
                 _config.Add("StillCombo", new KeyBind("Combo without moving", false, KeyBind.BindTypes.HoldActive, 'N'));
                 _config.AddGroupLabel("Extra : ");
+                _config.Add("method", new ComboBox("CanAttack Method : ", 1, "L# [BETA]", "EloBuddy"));
                 _config.Add("MissileCheck", new CheckBox("Use Missile Check"));
                 _config.Add("ExtraWindup", new Slider("Extra windup time", 80, 0, 200));
                 _config.Add("FarmDelay", new Slider("Farm delay", 0, 0, 200));
