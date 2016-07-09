@@ -1242,7 +1242,7 @@ namespace LeagueSharp.Common
                     if (mode != OrbwalkingMode.LaneClear || !ShouldWait())
                     {
                         var target = LSTargetSelector.GetTarget(-1, DamageType.Physical);
-                        if (target.LSIsValidTarget() && InAutoAttackRange(target))
+                        if (target.LSIsValidTarget() && InAutoAttackRange(target) && target.IsVisible && target.IsHPBarRendered)
                         {
                             return target;
                         }
