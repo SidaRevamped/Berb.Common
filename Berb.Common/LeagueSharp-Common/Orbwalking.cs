@@ -217,6 +217,8 @@ namespace LeagueSharp.Common
         /// </summary>
         private static float _minDistance = 400;
 
+        private static bool _missileLaunched;
+
         /// <summary>
         ///     The champion name
         /// </summary>
@@ -484,6 +486,11 @@ namespace LeagueSharp.Common
         /// <returns><c>true</c> if this instance can move the specified extra windup; otherwise, <c>false</c>.</returns>
         public static bool CanMove(float extraWindup, bool disableMissileCheck = false)
         {
+            if (_missileLaunched && Orbwalker.MissileCheck)
+            {
+                return true;
+            }
+
             var localExtraWindup = 0;
             if (ObjectManager.Player.ChampionName.Equals("Rengar") && (ObjectManager.Player.HasBuff("rengarqbase") || ObjectManager.Player.HasBuff("rengarqemp")))
             {
@@ -537,7 +544,7 @@ namespace LeagueSharp.Common
             }
 
             FireBeforeAttack(target);
-
+            _missileLaunched = false;
             //Console.WriteLine("1 - Attacking");
             if (EloBuddy.Player.IssueOrder(GameObjectOrder.AttackUnit, gTarget))
             {
@@ -710,12 +717,11 @@ namespace LeagueSharp.Common
         /// <param name="args">The <see cref="GameObjectProcessSpellCastEventArgs" /> instance containing the event data.</param>
         private static void Obj_AI_Base_OnDoCast(Obj_AI_Base sender, GameObjectProcessSpellCastEventArgs args)
         {
-            if (sender.IsMe)
+            if (sender.IsMe && IsAutoAttack(args.SData.Name))
             {
-                var ping = Game.Ping;
-                if (ping <= 30) //First world problems kappa
+                if (Game.Ping <= 30) //First world problems kappa
                 {
-                    Utility.DelayAction.Add(30 - ping, () => Obj_AI_Base_OnDoCast_Delayed(sender, args));
+                    Utility.DelayAction.Add(30 - Game.Ping, () => Obj_AI_Base_OnDoCast_Delayed(sender, args));
                     return;
                 }
 
@@ -738,6 +744,7 @@ namespace LeagueSharp.Common
             if (IsAutoAttack(args.SData.Name))
             {
                 FireAfterAttack(sender, args.Target as AttackableUnit);
+                _missileLaunched = true;
             }
         }
 
@@ -766,6 +773,7 @@ namespace LeagueSharp.Common
                 {
                     LastAATick = Utils.GameTimeTickCount - Game.Ping / 2;
                     LastMovementOrderTick = 0;
+                    _missileLaunched = false;
                     TotalAutoAttacks++;
 
                     if (Spell.Target is Obj_AI_Base)
@@ -890,6 +898,7 @@ namespace LeagueSharp.Common
                 _config.Add("Orbwalk", new KeyBind("Combo", false, KeyBind.BindTypes.HoldActive, 32));
                 _config.Add("StillCombo", new KeyBind("Combo without moving", false, KeyBind.BindTypes.HoldActive, 'N'));
                 _config.AddGroupLabel("Extra : ");
+                _config.Add("MissileCheck", new CheckBox("Enable Missile Check?"));
                 _config.Add("movementRandomize", new CheckBox("Randomize Location"));
                 _config.Add("ExtraWindup", new Slider("Extra windup time", 60, 0, 200));
                 _config.Add("FarmDelay", new Slider("Farm delay", 0, 0, 200));
@@ -969,6 +978,11 @@ namespace LeagueSharp.Common
             private int FarmDelay
             {
                 get { return getSliderItem(_config, "FarmDelay"); }
+            }
+
+            public static bool MissileCheck
+            {
+                get { return getCheckBoxItem(_config, "MissileCheck"); }
             }
 
             public static bool LimitAttackSpeed
