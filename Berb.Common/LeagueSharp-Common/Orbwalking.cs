@@ -962,7 +962,7 @@ namespace LeagueSharp.Common
             /// <value>The farm delay.</value>
             private int FarmDelay
             {
-                get { return getSliderItem(_config, "FarmDelay") + 40; }
+                get { return getSliderItem(_config, "FarmDelay"); }
             }
 
             public static bool LimitAttackSpeed
