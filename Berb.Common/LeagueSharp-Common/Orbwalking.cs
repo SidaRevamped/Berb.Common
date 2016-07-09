@@ -453,27 +453,7 @@ namespace LeagueSharp.Common
         /// <returns><c>true</c> if this instance can attack; otherwise, <c>false</c>.</returns>
         public static bool CanAttack()
         {
-            if (Orbwalker._config["method"].Cast<ComboBox>().CurrentValue == 1)
-            {
-                return EloBuddy.SDK.Orbwalker.CanAutoAttack;
-            }
-            var extraAttackDelay = 0f;
-            if (ObjectManager.Player.ChampionName.Equals("Graves"))
-            {
-                if (!ObjectManager.Player.HasBuff("GravesBasicAttackAmmo1"))
-                {
-                    return false;
-                }
-
-                var attackDelay = ObjectManager.Player.AttackDelay * 1000f;
-                extraAttackDelay = (attackDelay * 1.0740296828f) - 716.2381256175f - attackDelay;
-            }
-            else if (ObjectManager.Player.ChampionName.Equals("Jhin") && ObjectManager.Player.HasBuff("JhinPassiveReload"))
-            {
-                return false;
-            }
-
-            return (int)(Game.Time * 1000) + (Game.Ping / 2) + 25 >= LastAATick + (ObjectManager.Player.AttackDelay * 1000) + 0 + extraAttackDelay;
+            return EloBuddy.SDK.Orbwalker.CanAutoAttack && Game.Time * 1000 + Game.Ping / 2 + 25 >= LastAATick + Player.AttackDelay * 1000;
         }
 
         public static int getSliderItem(Menu m, string item)
@@ -659,14 +639,14 @@ namespace LeagueSharp.Common
             EloBuddy.Player.IssueOrder(GameObjectOrder.MoveTo, point);
             LastMovementOrderTick = TickCount;
             LastMoveCommandPosition = point;
-            LastMoveCommandT = Utils.GameTimeTickCount;
+            LastMoveCommandT = TickCount;
         }
 
         private static int lastRealAttack;
 
         private static bool HaveCancled()
         {
-            if (LastAATick - Utils.GameTimeTickCount > Player.AttackCastDelay * 1000 + 25)
+            if (LastAATick - TickCount > Player.AttackCastDelay * 1000 + 25)
                 return lastRealAttack < LastAATick;
             return false;
         }
@@ -687,7 +667,7 @@ namespace LeagueSharp.Common
             bool useFixedDistance = true,
             bool randomizeMinDistance = true)
         {
-            if (Utils.GameTimeTickCount - LastAttackCommandT < 68 + Math.Min(60, Game.Ping))
+            if (TickCount - LastAttackCommandT < 68 + Math.Min(60, Game.Ping))
             {
                 return;
             }
@@ -710,7 +690,7 @@ namespace LeagueSharp.Common
                     }
 
                     EloBuddy.Player.IssueOrder(GameObjectOrder.AttackUnit, target);
-                    LastAATick = (Utils.GameTimeTickCount + Game.Ping / 2);
+                    LastAATick = (TickCount + Game.Ping / 2);
                     LastAttackCommandT = TickCount;
                     _lastTarget = target;
                     BlockOrdersUntilTick = TickCount + 70 + Math.Min(60, Game.Ping);
@@ -808,7 +788,7 @@ namespace LeagueSharp.Common
 
                 if (unit.IsMe && (Spell.Target is Obj_AI_Base || Spell.Target is Obj_BarracksDampener || Spell.Target is Obj_HQ))
                 {
-                    LastAATick = Utils.GameTimeTickCount - Game.Ping / 2; // need test todo
+                    LastAATick = TickCount - Game.Ping / 2; // need test todo
                     _missileLaunched = false;
                     LastMovementOrderTick = 0;
                     LastMoveCommandT = 0;
@@ -936,7 +916,6 @@ namespace LeagueSharp.Common
                 _config.Add("Orbwalk", new KeyBind("Combo", false, KeyBind.BindTypes.HoldActive, 32));
                 _config.Add("StillCombo", new KeyBind("Combo without moving", false, KeyBind.BindTypes.HoldActive, 'N'));
                 _config.AddGroupLabel("Extra : ");
-                _config.Add("method", new ComboBox("CanAttack Method : ", 1, "L# [BETA]", "EloBuddy"));
                 _config.Add("MissileCheck", new CheckBox("Use Missile Check"));
                 _config.Add("ExtraWindup", new Slider("Extra windup time", 80, 0, 200));
                 _config.Add("FarmDelay", new Slider("Farm delay", 0, 0, 200));
@@ -985,7 +964,7 @@ namespace LeagueSharp.Common
                 {
                     FireAfterAttack(missile.SpellCaster, _lastTarget);
                     if (sender.IsMe)
-                        lastRealAttack = Utils.GameTimeTickCount;
+                        lastRealAttack = TickCount;
                 }
             }
 
@@ -1383,7 +1362,7 @@ namespace LeagueSharp.Common
                                     i < turretLandTick + 10 * closestTower.AttackDelay * 1000 + 50;
                                     i = i + closestTower.AttackDelay * 1000)
                                 {
-                                    var time = (int)i - Utils.GameTimeTickCount + Game.Ping / 2;
+                                    var time = (int)i - TickCount + Game.Ping / 2;
                                     var predHP =
                                         (int)
                                             HealthPrediction.LaneClearHealthPrediction(
@@ -1406,11 +1385,11 @@ namespace LeagueSharp.Common
                                     var timeBeforeDie = turretLandTick +
                                                         (turretAttackCount + 1) *
                                                         (int)(closestTower.AttackDelay * 1000) -
-                                                        Utils.GameTimeTickCount;
+                                                        TickCount;
                                     var timeUntilAttackReady = LastAATick + (int)(Player.AttackDelay * 1000) >
-                                                               Utils.GameTimeTickCount + Game.Ping / 2 + 25
+                                                               TickCount + Game.Ping / 2 + 25
                                         ? LastAATick + (int)(Player.AttackDelay * 1000) -
-                                          (Utils.GameTimeTickCount + Game.Ping / 2 + 25)
+                                          (TickCount + Game.Ping / 2 + 25)
                                         : 0;
                                     var timeToLandAttack = Player.IsMelee
                                         ? Player.AttackCastDelay * 1000
