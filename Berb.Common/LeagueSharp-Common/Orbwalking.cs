@@ -38,6 +38,12 @@ using LeagueSharp.SDK.Enumerations;
 
 #endregion
 
+/*
+ * Test events and make sure they're working, fix if needed
+ * Re-Add custom keys so things like Riven Burst can be added with ease
+ * Test, test and test.
+*/
+
 namespace LeagueSharp.Common
 {
     /// <summary>
