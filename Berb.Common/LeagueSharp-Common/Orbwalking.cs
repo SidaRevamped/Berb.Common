@@ -1134,7 +1134,7 @@ namespace LeagueSharp.Common
                     !misc["PriorizeFarm"].Cast<CheckBox>().CurrentValue)
                 {
                     var target = LSTargetSelector.GetTarget(-1, DamageType.Physical);
-                    if (target != null && InAutoAttackRange(target))
+                    if (target != null && InAutoAttackRange(target) && target.IsVisible && target.IsHPBarRendered)
                     {
                         return target;
                     }
@@ -1203,7 +1203,7 @@ namespace LeagueSharp.Common
                 }
 
                 //Forced target
-                if (_forcedTarget.LSIsValidTarget() && InAutoAttackRange(_forcedTarget))
+                if (_forcedTarget.LSIsValidTarget() && InAutoAttackRange(_forcedTarget) && _forcedTarget.IsVisible && _forcedTarget.IsHPBarRendered)
                 {
                     return _forcedTarget;
                 }
