@@ -212,11 +212,6 @@ namespace LeagueSharp.Common
         private static float _minDistance = 400;
 
         /// <summary>
-        ///     <c>true</c> if the auto attack missile was launched from the player.
-        /// </summary>
-        private static bool _missileLaunched;
-
-        /// <summary>
         ///     The champion name
         /// </summary>
         private static readonly string _championName;
@@ -489,13 +484,6 @@ namespace LeagueSharp.Common
                 localExtraWindup = 200;
             }
 
-            var disableMissileCheckA = disableMissileCheck || !Orbwalker.MissileCheck;
-
-            if (_missileLaunched && !disableMissileCheckA)
-            {
-                return true;
-            }
-
             return Player.Hero == Champion.Kalista || Core.GameTickCount + Game.Ping / 2 >= LastAATick + Player.AttackCastDelay * 1000 + extraWindup + localExtraWindup;
         }
 
@@ -544,10 +532,6 @@ namespace LeagueSharp.Common
 
             FireBeforeAttack(target);
 
-            if (GameObjects.Player.CanCancelAutoAttack())
-            {
-                _missileLaunched = false;
-            }
             //Console.WriteLine("1 - Attacking");
             if (EloBuddy.Player.IssueOrder(GameObjectOrder.AttackUnit, gTarget))
             {
@@ -748,7 +732,6 @@ namespace LeagueSharp.Common
             if (IsAutoAttack(args.SData.Name))
             {
                 FireAfterAttack(sender, args.Target as AttackableUnit);
-                _missileLaunched = true;
             }
         }
 
@@ -776,7 +759,6 @@ namespace LeagueSharp.Common
                 if (unit.IsMe && (Spell.Target is Obj_AI_Base || Spell.Target is Obj_BarracksDampener || Spell.Target is Obj_HQ))
                 {
                     LastAATick = Utils.GameTimeTickCount - Game.Ping / 2;
-                    _missileLaunched = false;
                     LastMovementOrderTick = 0;
                     TotalAutoAttacks++;
 
@@ -902,7 +884,6 @@ namespace LeagueSharp.Common
                 _config.Add("Orbwalk", new KeyBind("Combo", false, KeyBind.BindTypes.HoldActive, 32));
                 _config.Add("StillCombo", new KeyBind("Combo without moving", false, KeyBind.BindTypes.HoldActive, 'N'));
                 _config.AddGroupLabel("Extra : ");
-                _config.Add("MissileCheck", new CheckBox("Use Missile Check"));
                 _config.Add("movementRandomize", new CheckBox("Randomize Location"));
                 _config.Add("ExtraWindup", new Slider("Extra windup time", 80, 0, 200));
                 _config.Add("FarmDelay", new Slider("Farm delay", 0, 0, 200));
@@ -982,15 +963,6 @@ namespace LeagueSharp.Common
             private int FarmDelay
             {
                 get { return getSliderItem(_config, "FarmDelay") + 40; }
-            }
-
-            /// <summary>
-            ///     Gets a value indicating whether the orbwalker is orbwalking by checking the missiles.
-            /// </summary>
-            /// <value><c>true</c> if the orbwalker is orbwalking by checking the missiles; otherwise, <c>false</c>.</value>
-            public static bool MissileCheck
-            {
-                get { return getCheckBoxItem(_config, "MissileCheck"); }
             }
 
             public static bool LimitAttackSpeed
