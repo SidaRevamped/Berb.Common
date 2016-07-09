@@ -127,7 +127,7 @@ namespace LeagueSharp.SDK
                 }
 
                 // At the end of the dash:
-                if (dashData.Path.PathLength() > 200)
+                if (dashData.Path.LSPathLength() > 200)
                 {
                     var timeToPoint = input.Delay / 2f
                                       + (Math.Abs(input.Speed - float.MaxValue) > float.Epsilon
@@ -211,7 +211,7 @@ namespace LeagueSharp.SDK
                 };
             }
 
-            var pLength = path.PathLength();
+            var pLength = path.LSPathLength();
             var dist = input.Delay * speed - input.RealRadius;
 
             // Skillshots with only a delay
@@ -254,7 +254,7 @@ namespace LeagueSharp.SDK
                 var tDistance = dist;
 
                 if ((input.Type == SkillshotType.SkillshotLine || input.Type == SkillshotType.SkillshotCone)
-                    && input.Unit.DistanceSquared(input.From) < 200 * 200)
+                    && input.Unit.LSDistanceSquared(input.From) < 200 * 200)
                 {
                     tDistance += input.RealRadius;
                 }
@@ -292,7 +292,7 @@ namespace LeagueSharp.SDK
                                 var cp1 = input.From.ToVector2() + (p - input.From.ToVector2()).Rotated(beta);
                                 var cp2 = input.From.ToVector2() + (p - input.From.ToVector2()).Rotated(-beta);
 
-                                pos = cp1.DistanceSquared(pos) < cp2.DistanceSquared(pos) ? cp1 : cp2;
+                                pos = cp1.LSDistanceSquared(pos) < cp2.LSDistanceSquared(pos) ? cp1 : cp2;
                             }
                         }*/
 
@@ -345,7 +345,7 @@ namespace LeagueSharp.SDK
 
             // Target too far away.
             if (Math.Abs(input.Range - float.MaxValue) > float.Epsilon
-                && input.Unit.DistanceSquared(input.RangeCheckFrom) > Math.Pow(input.Range * 1.5, 2))
+                && input.Unit.LSDistanceSquared(input.RangeCheckFrom) > Math.Pow(input.Range * 1.5, 2))
             {
                 return new PredictionOutput { Input = input };
             }
@@ -378,19 +378,19 @@ namespace LeagueSharp.SDK
             if (Math.Abs(input.Range - float.MaxValue) > float.Epsilon)
             {
                 if (result.Hitchance >= HitChance.High
-                    && input.RangeCheckFrom.DistanceSquared(input.Unit.Position)
+                    && input.RangeCheckFrom.LSDistanceSquared(input.Unit.Position)
                     > Math.Pow(input.Range + input.RealRadius * 3 / 4, 2))
                 {
                     result.Hitchance = HitChance.Medium;
                 }
 
-                if (input.RangeCheckFrom.DistanceSquared(result.UnitPosition)
+                if (input.RangeCheckFrom.LSDistanceSquared(result.UnitPosition)
                     > Math.Pow(input.Range + (input.Type == SkillshotType.SkillshotCircle ? input.RealRadius : 0), 2))
                 {
                     result.Hitchance = HitChance.OutOfRange;
                 }
 
-                if (input.RangeCheckFrom.DistanceSquared(result.CastPosition) > Math.Pow(input.Range, 2)
+                if (input.RangeCheckFrom.LSDistanceSquared(result.CastPosition) > Math.Pow(input.Range, 2)
                     && result.Hitchance != HitChance.OutOfRange)
                 {
                     result.CastPosition = input.RangeCheckFrom
@@ -434,7 +434,7 @@ namespace LeagueSharp.SDK
         {
             var speed = input.Unit.MoveSpeed;
 
-            if (input.Unit.DistanceSquared(input.From) < 200 * 200)
+            if (input.Unit.LSDistanceSquared(input.From) < 200 * 200)
             {
                 // input.Delay /= 2;
                 speed /= 1.5f;

@@ -413,7 +413,7 @@ using EloBuddy; using Enumerations;
             /// </returns>
             public bool IsInRange(Vector3 position)
             {
-                return GameObjects.Player.DistanceSquared(position) < this.RangeSqr;
+                return GameObjects.Player.LSDistanceSquared(position) < this.RangeSqr;
             }
 
             /// <summary>

@@ -251,7 +251,7 @@ using EloBuddy; using Enumerations;
         /// <param name="vector2">Extended SharpDX Vector2</param>
         /// <param name="toVector3">SharpDX Vector3</param>
         /// <returns>The squared distance between the two vectors.</returns>
-        public static float DistanceSquared(this Vector2 vector2, Vector3 toVector3)
+        public static float LSDistanceSquared(this Vector2 vector2, Vector3 toVector3)
         {
             return Vector2.DistanceSquared(vector2, toVector3.ToVector2());
         }
@@ -264,7 +264,7 @@ using EloBuddy; using Enumerations;
         /// <param name="segmentEnd">Vector2 Segment End</param>
         /// <param name="onlyIfOnSegment">Only if Segment</param>
         /// <returns>The squared distance between the point and the segment.</returns>
-        public static float DistanceSquared(
+        public static float LSDistanceSquared(
             this Vector2 point,
             Vector2 segmentStart,
             Vector2 segmentEnd,
@@ -514,7 +514,7 @@ using EloBuddy; using Enumerations;
         /// <returns>
         ///     The <see cref="float" />.
         /// </returns>
-        public static float PathLength(this List<Vector2> path)
+        public static float LSPathLength(this List<Vector2> path)
         {
             var distance = 0f;
             for (var i = 0; i < path.Count - 1; i++)

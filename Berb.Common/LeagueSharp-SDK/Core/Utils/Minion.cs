@@ -193,7 +193,7 @@ namespace LeagueSharp.SDK.Core.Utils
                 {
                     var endPos = startPos + (range * (pos - startPos).LSNormalized());
 
-                    var count = minions.Count(pos2 => pos2.DistanceSquared(startPos, endPos, true) <= width * width);
+                    var count = minions.Count(pos2 => pos2.LSDistanceSquared(startPos, endPos, true) <= width * width);
 
                     if (count >= minionCount)
                     {

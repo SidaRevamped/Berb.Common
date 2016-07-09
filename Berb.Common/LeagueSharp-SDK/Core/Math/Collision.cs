@@ -199,7 +199,7 @@ namespace LeagueSharp.SDK
 
             return (collision is Obj_AI_Minion
                     && (predPos.Distance(inputSub.From) < 10 + radius || predPos.Distance(pos) < radius))
-                   || predPos.DistanceSquared(inputSub.From.ToVector2(), pos.ToVector2(), true)
+                   || predPos.LSDistanceSquared(inputSub.From.ToVector2(), pos.ToVector2(), true)
                    <= Math.Pow(inputSub.Radius + radius + extraRadius, 2);
         }
 

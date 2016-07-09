@@ -131,7 +131,7 @@ namespace LeagueSharp.SDK
                         gapcloser =>
                         gapcloser.SkillType == GapcloserType.Targeted
                         || (gapcloser.SkillType == GapcloserType.Skillshot
-                            && GameObjects.Player.DistanceSquared(gapcloser.Sender) < 250000)))
+                            && GameObjects.Player.LSDistanceSquared(gapcloser.Sender) < 250000)))
             {
                 OnGapCloser(MethodBase.GetCurrentMethod().DeclaringType, gapcloser);
             }

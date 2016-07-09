@@ -25,9 +25,10 @@ namespace LeagueSharp.SDK
     using EloBuddy.SDK.Menu.Values;
     using EloBuddy.SDK.Menu;
     using EloBuddy.SDK;
-    using EloBuddy; using Enumerations;
+    using EloBuddy;
+    using Enumerations;
     using SharpDX;
-
+    using SDK;
     /// <summary>
     ///     SharpDX/Vector3 Extensions
     /// </summary>
@@ -135,9 +136,9 @@ namespace LeagueSharp.SDK
         /// <param name="vector3">Extended SharpDX Vector3</param>
         /// <param name="toVector3">SharpDX Vector3</param>
         /// <returns>The squared distance between the two vectors.</returns>
-        public static float DistanceSquared(this Vector3 vector3, Vector3 toVector3)
+        public static float LSDistanceSquared(this Vector3 vector3, Vector3 toVector3)
         {
-            return vector3.ToVector2().DistanceSquared(toVector3);
+            return vector3.ToVector2().LSDistanceSquared(toVector3);
         }
 
         /// <summary>
@@ -146,9 +147,9 @@ namespace LeagueSharp.SDK
         /// <param name="vector3">Extended SharpDX Vector3</param>
         /// <param name="toVector2">SharpDX Vector2</param>
         /// <returns>The squared distance between the two vectors.</returns>
-        public static float DistanceSquared(this Vector3 vector3, Vector2 toVector2)
+        public static float LSDistanceSquared(this Vector3 vector3, Vector2 toVector2)
         {
-            return vector3.ToVector2().DistanceSquared(toVector2);
+            return vector3.ToVector2().LSDistanceSquared(toVector2);
         }
 
         /// <summary>
@@ -302,7 +303,7 @@ namespace LeagueSharp.SDK
         /// <returns>
         ///     The <see cref="float" />.
         /// </returns>
-        public static float PathLength(this List<Vector3> path)
+        public static float LSPathLength(this List<Vector3> path)
         {
             var distance = 0f;
             for (var i = 0; i < path.Count - 1; i++)

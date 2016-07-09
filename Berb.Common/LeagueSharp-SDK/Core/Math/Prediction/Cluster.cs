@@ -134,7 +134,7 @@ namespace LeagueSharp.SDK
                     var mecCircle = ConvexHull.GetMec(posibleTargets.Select(h => h.Position).ToList());
 
                     if (mecCircle.Radius <= input.RealRadius - 10
-                        && mecCircle.Center.DistanceSquared(input.RangeCheckFrom) < input.Range * input.Range)
+                        && mecCircle.Center.LSDistanceSquared(input.RangeCheckFrom) < input.Range * input.Range)
                     {
                         return new PredictionOutput
                         {
@@ -243,7 +243,7 @@ namespace LeagueSharp.SDK
                         }
                     }
 
-                    if (bestCandidateHits > 1 && input.From.DistanceSquared(bestCandidate) > 50 * 50)
+                    if (bestCandidateHits > 1 && input.From.LSDistanceSquared(bestCandidate) > 50 * 50)
                     {
                         return new PredictionOutput
                         {
@@ -443,7 +443,7 @@ namespace LeagueSharp.SDK
                 double radius,
                 List<Vector2> points)
             {
-                return points.Where(p => p.DistanceSquared(start, end, true) <= radius * radius);
+                return points.Where(p => p.LSDistanceSquared(start, end, true) <= radius * radius);
             }
 
             #endregion

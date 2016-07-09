@@ -475,7 +475,7 @@ namespace LeagueSharp.SDK
 
             if (!this.IsSkillshot)
             {
-                if (this.RangeCheckFrom.DistanceSquared(unit.ServerPosition) > this.RangeSqr)
+                if (this.RangeCheckFrom.LSDistanceSquared(unit.ServerPosition) > this.RangeSqr)
                 {
                     return CastStates.OutOfRange;
                 }
@@ -499,7 +499,7 @@ namespace LeagueSharp.SDK
                 return CastStates.Collision;
             }
 
-            if (this.RangeCheckFrom.DistanceSquared(prediction.CastPosition) > this.RangeSqr)
+            if (this.RangeCheckFrom.LSDistanceSquared(prediction.CastPosition) > this.RangeSqr)
             {
                 return CastStates.OutOfRange;
             }
@@ -740,7 +740,7 @@ namespace LeagueSharp.SDK
         /// </returns>
         public bool CastOnUnit(Obj_AI_Base unit)
         {
-            if (!this.IsReady() || this.From.DistanceSquared(unit.ServerPosition) > this.RangeSqr)
+            if (!this.IsReady() || this.From.LSDistanceSquared(unit.ServerPosition) > this.RangeSqr)
             {
                 return false;
             }
@@ -1096,7 +1096,7 @@ namespace LeagueSharp.SDK
         /// </returns>
         public bool IsInRange(Vector2 point, float otherRange = -1)
         {
-            return this.RangeCheckFrom.DistanceSquared(point)
+            return this.RangeCheckFrom.LSDistanceSquared(point)
                    < (otherRange < 0 ? this.RangeSqr : otherRange * otherRange);
         }
 
@@ -1393,7 +1393,7 @@ namespace LeagueSharp.SDK
             switch (this.Type)
             {
                 case SkillshotType.SkillshotCircle:
-                    if (point.DistanceSquared(castPosition) < this.WidthSqr)
+                    if (point.LSDistanceSquared(castPosition) < this.WidthSqr)
                     {
                         return true;
                     }
@@ -1401,7 +1401,7 @@ namespace LeagueSharp.SDK
                     break;
 
                 case SkillshotType.SkillshotLine:
-                    if (point.ToVector2().DistanceSquared(castPosition.ToVector2(), this.From.ToVector2(), true)
+                    if (point.ToVector2().LSDistanceSquared(castPosition.ToVector2(), this.From.ToVector2(), true)
                         < Math.Pow(this.Width + extraWidth, 2))
                     {
                         return true;
@@ -1412,7 +1412,7 @@ namespace LeagueSharp.SDK
                     var edge1 = (castPosition.ToVector2() - this.From.ToVector2()).Rotated(-this.Width / 2);
                     var edge2 = edge1.Rotated(this.Width);
                     var v = point.ToVector2() - this.From.ToVector2();
-                    if (point.DistanceSquared(this.From) < this.RangeSqr && edge1.CrossProduct(v) > 0
+                    if (point.LSDistanceSquared(this.From) < this.RangeSqr && edge1.CrossProduct(v) > 0
                         && v.CrossProduct(edge2) > 0)
                     {
                         return true;

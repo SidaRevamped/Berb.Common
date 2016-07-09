@@ -157,9 +157,9 @@ namespace LeagueSharp.SDK
         /// <param name="source">The Source</param>
         /// <param name="target">The Target</param>
         /// <returns>The squared distance between the two objects</returns>
-        public static float DistanceSquared(this GameObject source, GameObject target)
+        public static float LSDistanceSquared(this GameObject source, GameObject target)
         {
-            return source.DistanceSquared(target.Position);
+            return source.LSDistanceSquared(target.Position);
         }
 
         /// <summary>
@@ -168,9 +168,9 @@ namespace LeagueSharp.SDK
         /// <param name="source">The Source</param>
         /// <param name="position">The Position</param>
         /// <returns>The distance squared between a <see cref="GameObject" /> and a <see cref="Vector3" /></returns>
-        public static float DistanceSquared(this GameObject source, Vector3 position)
+        public static float LSDistanceSquared(this GameObject source, Vector3 position)
         {
-            return source.DistanceSquared(position.ToVector2());
+            return source.LSDistanceSquared(position.ToVector2());
         }
 
         /// <summary>
@@ -179,9 +179,9 @@ namespace LeagueSharp.SDK
         /// <param name="source">The Source</param>
         /// <param name="position">The Position</param>
         /// <returns>The distance squared between a <see cref="GameObject" /> and a <see cref="Vector2" /></returns>
-        public static float DistanceSquared(this GameObject source, Vector2 position)
+        public static float LSDistanceSquared(this GameObject source, Vector2 position)
         {
-            return source.Position.DistanceSquared(position);
+            return source.Position.LSDistanceSquared(position);
         }
 
         /// <summary>
@@ -190,9 +190,9 @@ namespace LeagueSharp.SDK
         /// <param name="source">The Source</param>
         /// <param name="target">The Target</param>
         /// <returns>The squared distance between the two Obj_AI_Base</returns>
-        public static float DistanceSquared(this Obj_AI_Base source, Obj_AI_Base target)
+        public static float LSDistanceSquared(this Obj_AI_Base source, Obj_AI_Base target)
         {
-            return source.DistanceSquared(target.ServerPosition);
+            return source.LSDistanceSquared(target.ServerPosition);
         }
 
         /// <summary>
@@ -201,9 +201,9 @@ namespace LeagueSharp.SDK
         /// <param name="source">The Source</param>
         /// <param name="position">The Position</param>
         /// <returns>The distance squared between a <see cref="Obj_AI_Base" /> and a <see cref="Vector3" /></returns>
-        public static float DistanceSquared(this Obj_AI_Base source, Vector3 position)
+        public static float LSDistanceSquared(this Obj_AI_Base source, Vector3 position)
         {
-            return source.DistanceSquared(position.ToVector2());
+            return source.LSDistanceSquared(position.ToVector2());
         }
 
         /// <summary>
@@ -212,9 +212,9 @@ namespace LeagueSharp.SDK
         /// <param name="source">The Source</param>
         /// <param name="position">The Position</param>
         /// <returns>The distance squared between a <see cref="Obj_AI_Base" /> and a <see cref="Vector2" /></returns>
-        public static float DistanceSquared(this Obj_AI_Base source, Vector2 position)
+        public static float LSDistanceSquared(this Obj_AI_Base source, Vector2 position)
         {
-            return source.ServerPosition.DistanceSquared(position);
+            return source.ServerPosition.LSDistanceSquared(position);
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace LeagueSharp.SDK
             }
 
             return hero.IsVisible
-                   && GameObjects.AllySpawnPoints.Any(sp => hero.DistanceSquared(sp.Position) < fountainRange);
+                   && GameObjects.AllySpawnPoints.Any(sp => hero.LSDistanceSquared(sp.Position) < fountainRange);
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace LeagueSharp.SDK
         /// <returns>Is Hero in shop range</returns>
         public static bool InShop(this AIHeroClient hero)
         {
-            return hero.IsVisible && GameObjects.AllyShops.Any(s => hero.DistanceSquared(s.Position) < 1562500);
+            return hero.IsVisible && GameObjects.AllyShops.Any(s => hero.LSDistanceSquared(s.Position) < 1562500);
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace LeagueSharp.SDK
             }
 
             return
-                (@from.IsValid() ? @from : GameObjects.Player.ServerPosition).DistanceSquared(
+                (@from.IsValid() ? @from : GameObjects.Player.ServerPosition).LSDistanceSquared(
                     @base?.ServerPosition ?? unit.Position) < range * range;
         }
 

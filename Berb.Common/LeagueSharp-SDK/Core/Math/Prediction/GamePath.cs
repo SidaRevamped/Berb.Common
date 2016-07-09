@@ -103,7 +103,7 @@ namespace LeagueSharp.SDK
                         {
                             distance += Math.Min(
                                 (currentPath.Time - nextPath.Time) * unit.MoveSpeed,
-                                currentPath.Path.PathLength());
+                                currentPath.Path.LSPathLength());
                         }
                     }
 
@@ -111,7 +111,7 @@ namespace LeagueSharp.SDK
                     var lastPath = paths.Last();
                     if (lastPath.WaypointCount > 0)
                     {
-                        distance += Math.Min(lastPath.Time * unit.MoveSpeed, lastPath.Path.PathLength());
+                        distance += Math.Min(lastPath.Time * unit.MoveSpeed, lastPath.Path.LSPathLength());
                     }
                 }
                 else
