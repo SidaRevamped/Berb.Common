@@ -891,7 +891,7 @@ namespace LeagueSharp.Common
                 _config.Add("StillCombo", new KeyBind("Combo without moving", false, KeyBind.BindTypes.HoldActive, 'N'));
                 _config.AddGroupLabel("Extra : ");
                 _config.Add("movementRandomize", new CheckBox("Randomize Location"));
-                _config.Add("ExtraWindup", new Slider("Extra windup time", 80, 0, 200));
+                _config.Add("ExtraWindup", new Slider("Extra windup time", 60, 0, 200));
                 _config.Add("FarmDelay", new Slider("Farm delay", 0, 0, 200));
                 _config.Add("delayMovement", new Slider("Movement delay", 0, 0, 500));
                 _config.Add("movementMaximumDistance", new Slider("Maximum Distance", 1500, 500, 1500));
@@ -1547,12 +1547,21 @@ namespace LeagueSharp.Common
                     }
 
                     var target = GetTarget();
-                    Orbwalk(target, _orbwalkingPoint.LSTo2D().IsValid() ? _orbwalkingPoint : Game.CursorPos, getSliderItem(_config, "ExtraWindup"), Math.Max(getSliderItem(misc, "HoldPosRadius"), 30));
+                    Orbwalk(target, _orbwalkingPoint.LSTo2D().IsValid() ? _orbwalkingPoint : Game.CursorPos, getWindUp(), Math.Max(getSliderItem(misc, "HoldPosRadius"), 30));
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
+            }
+
+            public static int getWindUp()
+            {
+                if (ObjectManager.Player.ChampionName == "Jinx")
+                {
+                    return getSliderItem(_config, "ExtraWindup") + 40;
+                }
+                return getSliderItem(_config, "ExtraWindup") + 20;
             }
 
             /// <summary>
